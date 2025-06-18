@@ -19,3 +19,4 @@ def unregister():
     gradiente.unregister()
     plano_tangente.unregister()
 #Vivan las tareas :D
+#Te quiero y :3
