@@ -1,7 +1,7 @@
 bl_info = {
-    "name":        "Visualizador de Superficies y Gradientes",
+    "name":        "proyecto-calculo-II",
     "description": "Genera superficies z=f(x,y), curvas de nivel, gradiente y plano tangente",
-    "author":      "Equipo Cálculo II (2025‑I)",
+    "author":      "LyM",
     "version":     (0, 1, 0),
     "blender":     (3, 0, 0),          # Versión mínima de Blender
     "location":    "View3D › Sidebar › Superficies",
