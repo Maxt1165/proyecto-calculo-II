@@ -1,5 +1,5 @@
 bl_info = {
-    "name":        "proyecto-calculo-II",
+    "name":        "visualizador_superficies",
     "description": "Genera superficies z=f(x,y), curvas de nivel, gradiente y plano tangente",
     "author":      "LyM",
     "version":     (0, 1, 0),
