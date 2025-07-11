@@ -3,7 +3,7 @@ bl_info = {
     "description": "Genera superficies z=f(x,y), curvas de nivel, gradiente y plano tangente",
     "author":      "LyM",
     "version":     (0, 1, 0),
-    "blender":     (3, 0, 0),          # Versión mínima de Blender
+    "blender":     (4,4, 3),          # Versión mínima de Blender
     "location":    "View3D › Sidebar › Superficies",
     "category":    "3D View",
 }
