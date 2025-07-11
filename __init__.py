@@ -1,8 +1,3 @@
-# visualizador/__init__.py
-#
-#  Add‑on: Visualizador de Superficies y Gradientes
-#  Proyecto de Cálculo II – 2025‑I
-#
 bl_info = {
     "name":        "Visualizador de Superficies y Gradientes",
     "description": "Genera superficies z=f(x,y), curvas de nivel, gradiente y plano tangente",
