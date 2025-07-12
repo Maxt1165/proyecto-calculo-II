@@ -24,7 +24,7 @@ from . import opB_superficie
 # from . import opB_gradiente
 # from . import propiedades
 
-_modules = [ui_panel, opB_superficie]  # Añade aquí más módulos si es necesario
+_modules = [ui_panel, opB_superficie]  # AQUI SE AÑADIRAN LOS MODULOS A DESARROLLAR
 
 def _reload_modules():
     for m in _modules:
