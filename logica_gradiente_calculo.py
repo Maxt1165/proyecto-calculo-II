@@ -4,7 +4,6 @@ import sympy as sp
 def calcular_gradiente(expresion, punto):
     """
     Calcula el vector gradiente en un punto dado para una función f(x,y)
-    
     Args:
         expresion (str): Función matemática (ej: "x**2 + y**2")
         punto (tuple): Punto (x, y) donde calcular el gradiente 
