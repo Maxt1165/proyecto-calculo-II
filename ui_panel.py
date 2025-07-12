@@ -64,3 +64,27 @@ def unregister():
     # Desregistra en orden inverso
         #bpy.utils.unregister_class(VISUALIZADOR_PT_Panel)
     bpy.utils.unregister_class(CALCBLENDER_PT_SurfacePanel)
+
+################################################REVISAR
+"""# Añadir esto en el panel principal
+class CALCBLENDER_PT_GradientePanel(bpy.types.Panel):
+    bl_label = "Gradientes"
+    bl_idname = "CALCBLENDER_PT_GradientePanel"
+    bl_parent_id = "CALCBLENDER_PT_SurfacePanel"  # Panel padre
+    bl_space_type = 'VIEW_3D'
+    bl_region_type = 'UI'
+    bl_options = {'DEFAULT_CLOSED'}
+    
+    def draw(self, context):
+        layout = self.layout
+        obj = context.active_object
+        
+        box = layout.box()
+        box.label(text="Visualización de Gradiente", icon='FORCE_MAGNETIC')
+        
+        if obj and "funcion" in obj:
+            box.label(text=f"Superficie: {obj['funcion']}", icon='OBJECT_DATA')
+            box.prop(self, "resolucion", slider=True)
+            box.operator("calcblender.visualizar_gradiente", text="Generar Campo Vectorial")
+        else:
+            box.label(text="Seleccione una superficie creada", icon='ERROR')"""

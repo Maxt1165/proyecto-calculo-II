@@ -1,0 +1,84 @@
+import bpy
+import mathutils
+from ..logica import gradiente_calculo
+
+class CB_OT_VisualizarGradiente(bpy.types.Operator):
+    bl_idname = "calcblender.visualizar_gradiente"
+    bl_label = "Visualizar Gradiente"
+    bl_description = "Crea una representación visual del campo vectorial gradiente"
+    bl_options = {'REGISTER', 'UNDO'}
+    
+    resolucion: bpy.props.IntProperty(
+        name="Resolución",
+        default=10,
+        min=3,
+        max=30
+    )
+    
+    @classmethod
+    def poll(cls, context):
+        # Solo disponible si hay una superficie seleccionada
+        obj = context.active_object
+        return obj and "funcion" in obj
+    
+    def execute(self, context):
+        obj = context.active_object
+        funcion = obj["funcion"]
+        
+        # Obtener rango de la superficie
+        x_min = min(v.co.x for v in obj.data.vertices)
+        x_max = max(v.co.x for v in obj.data.vertices)
+        y_min = min(v.co.y for v in obj.data.vertices)
+        y_max = max(v.co.y for v in obj.data.vertices)
+        
+        # Calcular vectores gradientes
+        vectores = gradiente_calculo.vector_gradiente(
+            funcion,
+            (x_min, x_max),
+            (y_min, y_max),
+            self.resolucion
+        )
+        
+        # Crear curva vacía para almacenar vectores
+        nombre = f"Gradiente_{funcion}"
+        curva = bpy.data.curves.new(nombre, 'CURVE')
+        curva.dimensions = '3D'
+        
+        # Crear flechas para cada vector
+        for origen, vector in vectores:
+            # Crear geometría de flecha
+            mesh_flecha = bpy.data.meshes.new("Flecha")
+            bm = bmesh.new()
+            
+            # Punto origen y destino
+            destino = (
+                origen[0] + vector[0],
+                origen[1] + vector[1],
+                origen[2] + vector[2]
+            )
+            
+            # Crear vértices
+            v1 = bm.verts.new(origen)
+            v2 = bm.verts.new(destino)
+            
+            # Crear cono en la punta
+            bm.verts.ensure_lookup_table()
+            flecha = bm.verts.new((
+                destino[0] - vector[0]*0.2,
+                destino[1] - vector[1]*0.2,
+                destino[2] - vector[2]*0.2
+            ))
+            
+            # Crear arista y cara
+            bm.edges.new((v1, v2))
+            bm.faces.new((v2, flecha))
+            
+            bm.to_mesh(mesh_flecha)
+            bm.free()
+            
+            # Crear objeto y añadir a la curva
+            obj_flecha = bpy.data.objects.new("Flecha", mesh_flecha)
+            context.collection.objects.link(obj_flecha)
+        
+        self.report({'INFO'}, f"Campo gradiente creado para {funcion}")
+        return {'FINISHED'}

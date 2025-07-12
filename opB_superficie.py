@@ -37,6 +37,8 @@ class CALCBLENDER_OT_CrearSuperficie(bpy.types.Operator):
                 y_domain=(props.superficie_y_min, props.superficie_y_max),
                 resolution=props.superficie_resolution
             )
+            """# En el método execute(), después de crear la superficie:
+            obj["funcion"] = props.surface_function  # Guardar función como propiedad"""
           # Posicionar el objeto en la ubicación del cursor 3D de Blender
             obj.location = context.scene.cursor.location  # Usa la posición actual del cursor como origen
 
