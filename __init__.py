@@ -16,14 +16,14 @@ def register():
 
 def unregister():
     ui_panel.unregister()
-    
+
 # ESTO ACTUALIZARA LOS MODULOS (ARCHIVOS) CADA QUE SE RECARGA ESTE __init__.py
 
 import importlib
 
-from . import ui_panel, mesh_surface, gradiente, plano_tangente
+from . import ui_panel
 
-_modules = [ui_panel, mesh_surface, gradiente, plano_tangente]
+_modules = [ui_panel]
 
 def _reload_modules():
     for m in _modules:
