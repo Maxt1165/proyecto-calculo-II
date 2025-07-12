@@ -37,7 +37,7 @@ def register():
             m.register()
 
     # Importar componentes después del arranque (evita ciclos)
-    import opB_superficie
+    from . import opB_superficie
     print("Se importó opB_superficie en el archivo __init__.py")
 
 
@@ -57,7 +57,7 @@ def register():
 
 
 def unregister():
-    import opB_superficie
+    from . import opB_superficie
     print("Se importó opB_superficie en el archivo __init__.py")
     # Desregistrar en orden inverso
     ui_panel.unregister()
