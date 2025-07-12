@@ -12,7 +12,7 @@ from ..logica import superficie_generar
 from ..utilidades import manejoErrores
 
 class CrearSuperficies(bpy.types.Operator):
-    bl_idname = "visualizador_superficies.crear_superficie"
+    bl_idname = "visualizador_superficies.crearsuperficie"
     bl_label = "Crear Superficie"
     bl_options = {'REGISTER', 'UNDO'}
     #REGISTER: Hace visible el operador en la UI y permite asignar atajos de teclado.
