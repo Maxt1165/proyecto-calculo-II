@@ -9,7 +9,7 @@ class VISUALIZADOR_PT_Panel(bpy.types.Panel):
 
     def draw(self, context):
         layout = self.layout
-        layout.label(text="¡Hola desde el Add-on!")
+        layout.label(text="GANARON LOS MALOS 🗣️")
 
 def register():
     bpy.utils.register_class(VISUALIZADOR_PT_Panel)
