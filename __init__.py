@@ -22,13 +22,26 @@ def unregister():
 #  IMPORTACIÓN DE SUBMÓDULOS
 # ------------------------------------------------------------------ #
 import importlib
-from . import ui_panel, mesh_surface
 
-_modules = [ui_panel, mesh_surface]
+from . import ui_panel, mesh_surface, gradiente, plano_tangente
+
+_modules = [ui_panel, mesh_surface, gradiente, plano_tangente]
 
 def _reload_modules():
     for m in _modules:
         importlib.reload(m)
+
+def register():
+    _reload_modules()
+    for m in _modules:
+        if hasattr(m, "register"):
+            m.register()
+
+def unregister():
+    for m in reversed(_modules):
+        if hasattr(m, "unregister"):
+            m.unregister()
+
 
 
 # ------------------------------------------------------------------ #
