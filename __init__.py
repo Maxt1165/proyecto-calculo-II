@@ -9,10 +9,7 @@ bl_info = {
 }
 
 import bpy
-from . import ui_panel
-from  .import gui
-from .import operacionesBlender
-from .import utilidades
+
 
 #def register():
    # ui_panel.register()
@@ -34,7 +31,10 @@ def register():
     for m in _modules:
         if hasattr(m, "register"):
             m.register()
-
+    from . import ui_panel
+    from  .import gui
+    from .import operacionesBlender
+    from .import utilidades
     ui_panel.register()
 
     # Registrar propiedades primero
@@ -55,6 +55,10 @@ def unregister():
     for m in reversed(_modules):
         if hasattr(m, "unregister"):
             m.unregister()
+    from . import ui_panel
+    from  .import gui
+    from .import operacionesBlender
+    from .import utilidades
     ui_panel.unregister()
     gui.main_panel.unregister()
     operacionesBlender.ptangente_opB.unregister()
