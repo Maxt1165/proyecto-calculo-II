@@ -4,7 +4,7 @@ import bpy
 print('Se importó bpy en el archivo superficie_generar')
 import bmesh # type: ignore
 print('Se importó bmesh en el archivo superficie_generar')
-from .logica_soporte_matematica import safe_lambdify
+from .logica_soporte_matematica import hacerfuncion_segura
 print('Se importó safe_lambdify de .soporte_matematica')
 
 """Propósito:Generar una superficie 3D en Blender a partir de una
@@ -14,7 +14,7 @@ expresión matemática z=f(x,y), usando NumPy, SymPy y BMesh (eficiencia)"""
 def crear_superficie(expresion, x_dominio, y_dominio, resolucion):
     # 1. Preparar función vectorizada
     """Convierte la expresión simbólica expresion en una función NumPy-evaluable"""
-    f = safe_lambdify(expresion)
+    f = hacerfuncion_segura(expresion)
     
     # 2. Crear grid 2D de puntos para las variables optimizado con NumPy
     x = np.linspace(*x_dominio, resolucion)
