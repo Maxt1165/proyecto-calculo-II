@@ -34,7 +34,7 @@ def register():
     for m in _modules:
         if hasattr(m, "register"):
             m.register()
-"""
+
         # Registrar propiedades primero
     gui.propiedades.register() 
     
@@ -54,10 +54,9 @@ def unregister():
         if hasattr(m, "unregister"):
             m.unregister()
     
-      gui.main_panel.unregister()
+    gui.main_panel.unregister()
     operacionesBlender.ptangente_opB.unregister()
     operacionesBlender.gradiente_opB.unregister()
     operacionesBlender.superficie_opB.unregister()
     gui.propiedades.unregister()
 
-"""
