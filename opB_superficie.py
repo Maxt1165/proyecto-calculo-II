@@ -1,32 +1,31 @@
 #Creación de superficies
+"""Propósito:
+Definir un operador personalizado de Blender que genera una malla 3D a partir de una función 
+z=f(x,y), utilizando los parámetros definidos en la interfaz del usuario (función, dominio y resolución)."""
 import bpy
 print("Se importó bpy en el archivo superficie_opB.py")
 #Dada una función matemática z = f(x, y), generar una una malla (grid) que represente esa superficie en el espacio 3D.
-"""PASOS
-1. Definir la función: El usuario ingresa una cadena (string) con la expresión matemática, por ejemplo: "x**2 + y**2".
-2. Definir el dominio: Rango para x y y (por ejemplo, x de -5 a 5, y de -5 a 5) y la resolución (número de puntos).
-3. Evaluar la función: Para cada punto (x, y) en el dominio, calcular z = f(x, y).
-4. Crear la malla: Construir una malla de vértices y caras (quadrados o triángulos) que represente la superficie.
-5. Añadir el objeto a la escena de Blender """
-from . import logica_superficie_generar
+
+from . import logica_superficie_generar #contiene a la función crear_superficie
 print("Se importó superficie_generar en el archivo opB_superficie.py")
 
 class CALCBLENDER_OT_CrearSuperficie(bpy.types.Operator):
-    bl_idname = "visualizador_superficies.crearsuperficie"
+    bl_idname = "visualizador_superficies.crearsuperficie" #Nombre interno del operador
     bl_label = "Crear Superficie"
     bl_options = {'REGISTER', 'UNDO'}
-    #REGISTER: Hace visible el operador en la UI y permite asignar atajos de teclado.
+    #REGISTER: Hace visible el operador en la UI /permite asignar atajos de teclado.
     #Permite deshacer la acción con Ctrl+Z.
 
     @classmethod
-    #Verifica si el operador puede ejecutarse en el contexto actual
-    def poll(cls, context):
-        return context.mode == 'OBJECT'
-    
-    #carga las propiedades guardadas (como la función matemática y rangos)
-    # desde la escena de Blender para usarlas en los cálculos.
-    #Retorna {'FINISHED'} si tiene éxito.
-    def execute(self, context):
+    #Verifica si el operador puede ejecutarse 
+    def poll(cls, contexto):
+        return contexto.mode == 'OBJECT'
+
+    #METODO EJECUTABLE CUANDO EL USUARIO DA CLIC EN CREAR SUPERFICIE
+    """carga las propiedades guardadas (función matemática y rangos)
+    desde Blender para usarlas en cálculos"""
+    def ejecutable_crearSuperficie(self, context):
+        #accede a las propiedades personalizadas en propiedades.py.
         props = context.scene.calcblender_props
         
         try:
