@@ -30,23 +30,3 @@ def safe_lambdify(expression):
         
         return error_func
     
-import sympy as sp
-import numpy as np
-import re
-
-class MathEngine:
-    @staticmethod
-    def parse_function(expr):
-        """Convierte string a función SymPy con sanitización"""
-        safe_expr = re.sub(r'[^0-9a-zA-Z\+\-\*\/\^\(\)\.]', '', expr)
-        x, y = sp.symbols('x y')
-        return sp.sympify(safe_expr), (x, y)
-    
-    @staticmethod
-    def vectorize_function(expr, variables):
-        """Crea función NumPy segura"""
-        try:
-            f = sp.lambdify(variables, expr, modules='numpy')
-            return lambda X, Y: np.nan_to_num(f(X, Y), nan=0.0)
-        except:
-            return lambda X, Y: np.zeros_like(X)
