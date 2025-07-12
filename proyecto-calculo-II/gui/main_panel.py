@@ -37,3 +37,4 @@ class CALCBLENDER_PT_SurfacePanel(bpy.types.Panel):
         # Previsualización matemática
         if hasattr(props, 'function_preview'):
             box.label(text=f"Función válida: {props.function_preview}", icon='CON_TRANSFORM')
+
