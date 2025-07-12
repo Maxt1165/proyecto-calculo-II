@@ -66,4 +66,3 @@ def unregister():
         bpy.utils.unregister_class(CALCBLENDER_OT_CrearSuperficie)
     except RuntimeError:
         print("Clase ya estaba desregistrada.")
-

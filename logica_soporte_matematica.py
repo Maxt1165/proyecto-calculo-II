@@ -5,7 +5,6 @@ print('Se importó numpy en el archivo soporte_matematica')
 import re #Para hacer limpieza de caracteres peligrosos en la expresión.
 print('Se importó ¿re? en el archivo soporte_matematica')
 
-
 """Propósito: Convertir una expresión escrita por el usuario como "x**2 + y**2" en una
 # función evaluable en NumPy, de forma segura, tolerante a errores y compatible con Blender"""
 def hacerfuncion_segura(expresion):
