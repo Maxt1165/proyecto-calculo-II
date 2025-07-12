@@ -7,7 +7,6 @@ import bpy
 3. Evaluar la función: Para cada punto (x, y) en el dominio, calcular z = f(x, y).
 4. Crear la malla: Construir una malla de vértices y caras (quadrados o triángulos) que represente la superficie.
 5. Añadir el objeto a la escena de Blender """
-import bpy
 from ..logica import superficie_generar
 
 class CrearSuperficies(bpy.types.Operator):
