@@ -1,5 +1,7 @@
 import bpy
 print("Se importó bpy en el archivo ui_panel")
+
+#from . import gui
 """
 class VISUALIZADOR_PT_Panel(bpy.types.Panel):
     bl_label = "Panel de Prueba"
@@ -20,6 +22,7 @@ class CALCBLENDER_PT_SurfacePanel(bpy.types.Panel):
     bl_region_type = 'UI'
     bl_category = 'CalcBlender'
     bl_context = "objectmode"
+    """Se mostrará en el modo objeto (objectmode), dentro del panel lateral de la vista 3D en la pestaña CalcBlender"""
     
     def draw(self, context):
         layout = self.layout
@@ -88,5 +91,3 @@ def register():
 def unregister():
     for cls in reversed(classes):
         bpy.utils.unregister_class(cls)
-
-

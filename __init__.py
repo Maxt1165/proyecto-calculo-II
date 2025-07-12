@@ -44,20 +44,3 @@ def unregister():
     for m in reversed(_modules):
         if hasattr(m, "unregister"):
             m.unregister()
-"""# En la función register()
-def register():
-    # ... (registro previo)
-    
-    # Registrar nuevo operador y panel
-    from .operacionesBlender import gradiente_opB
-    from .gui import main_panel
-    
-    gradiente_opB.register()
-    bpy.utils.register_class(main_panel.CALCBLENDER_PT_GradientePanel)
-
-# En la función unregister()
-def unregister():
-    # ... (desregistro previo)
-    
-    bpy.utils.unregister_class(main_panel.CALCBLENDER_PT_GradientePanel)
-    gradiente_opB.unregister()"""
