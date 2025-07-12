@@ -55,7 +55,7 @@ def unregister():
     for m in reversed(_modules):
         if hasattr(m, "unregister"):
             m.unregister()
-    ui_panel.register()
+    ui_panel.unregister()
     gui.main_panel.unregister()
     operacionesBlender.ptangente_opB.unregister()
     operacionesBlender.gradiente_opB.unregister()
