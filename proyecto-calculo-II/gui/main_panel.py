@@ -38,3 +38,8 @@ class CALCBLENDER_PT_SurfacePanel(bpy.types.Panel):
         if hasattr(props, 'function_preview'):
             box.label(text=f"Función válida: {props.function_preview}", icon='CON_TRANSFORM')
 
+def register():
+    bpy.utils.register_class(CALCBLENDER_PT_SurfacePanel)
+
+def unregister():
+    bpy.utils.unregister_class(CALCBLENDER_PT_SurfacePanel)

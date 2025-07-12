@@ -14,11 +14,11 @@ from  .import gui
 from .import operacionesBlender
 from .import utilidades
 
-def register():
-    ui_panel.register()
+#def register():
+   # ui_panel.register()
 
-def unregister():
-    ui_panel.unregister()
+#def unregister():
+   # ui_panel.unregister()
 
 # ESTO ACTUALIZARA LOS MODULOS (ARCHIVOS) CADA QUE SE RECARGA ESTE __init__.py
 import importlib
@@ -35,7 +35,7 @@ def register():
         if hasattr(m, "register"):
             m.register()
 
-
+    ui_panel.register()
 
     # Registrar propiedades primero
     gui.propiedades.register() 
@@ -55,7 +55,7 @@ def unregister():
     for m in reversed(_modules):
         if hasattr(m, "unregister"):
             m.unregister()
-    
+    ui_panel.register()
     gui.main_panel.unregister()
     operacionesBlender.ptangente_opB.unregister()
     operacionesBlender.gradiente_opB.unregister()
