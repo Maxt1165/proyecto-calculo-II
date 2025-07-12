@@ -33,7 +33,7 @@ class CALCBLENDER_PT_SurfacePanel(bpy.types.Panel):
         # Entrada de función con validación
         box.label(text="Función z = f(x, y):")
         row = box.row()
-        row.prop(props, "surface_function", text="z =")
+        row.prop(props, "superficie_funcion", text="z =")
             #row.operator("calcblender.validate_function", text="", icon='CHECKMARK')  # Botón para validar la función
         
         # Controles de dominio
