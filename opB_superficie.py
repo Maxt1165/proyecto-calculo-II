@@ -15,6 +15,16 @@ class CALCBLENDER_OT_CrearSuperficie(bpy.types.Operator):
     bl_options = {'REGISTER', 'UNDO'}
     #REGISTER: Hace visible el operador en la UI /permite asignar atajos de teclado.
     #Permite deshacer la acción con Ctrl+Z.
+    bl_idname = "visualizador_superficies.crearsuperficie"
+    bl_label = "Crear Superficie"
+    bl_options = {'REGISTER', 'UNDO'}
+
+    superficie_funcion = bpy.props.StringProperty(name="Función z =")
+    superficie_x_min = bpy.props.FloatProperty(name="X Min", default=-5.0)
+    superficie_x_max = bpy.props.FloatProperty(name="X Max", default=5.0)
+    superficie_y_min = bpy.props.FloatProperty(name="Y Min", default=-5.0)
+    superficie_y_max = bpy.props.FloatProperty(name="Y Max", default=5.0)
+    superficie_resolution = bpy.props.IntProperty(name="Resolución", default=10, min=3, max=50)
 
     @classmethod
     #Verifica si el operador puede ejecutarse 
