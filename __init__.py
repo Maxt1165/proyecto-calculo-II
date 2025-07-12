@@ -22,14 +22,11 @@ def unregister():
 #  IMPORTACIÓN DE SUBMÓDULOS
 # ------------------------------------------------------------------ #
 import importlib
-from . import ui_panel, mesh_surface, gradiente, plano_tangente
+from . import ui_panel, mesh_surface
 
-#  Poner los módulos en una lista facilita registrar / anular registro
-_modules = [ui_panel, mesh_surface, gradiente, plano_tangente]
+_modules = [ui_panel, mesh_surface]
 
-
-def _reload_submodules():
-    """Recarga en caliente cada submódulo (útil durante el desarrollo)."""
+def _reload_modules():
     for m in _modules:
         importlib.reload(m)
 
