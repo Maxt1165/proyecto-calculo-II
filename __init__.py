@@ -9,7 +9,7 @@ bl_info = {
 }
 
 import bpy
-
+print("Se importó bpy en el archivo __init__.py")
 
 #def register():
    # ui_panel.register()
@@ -19,7 +19,9 @@ import bpy
 
 # ESTO ACTUALIZARA LOS MODULOS (ARCHIVOS) CADA QUE SE RECARGA ESTE __init__.py
 import importlib
+print("Se importó importlib en el archivo __init__.py")
 from . import ui_panel
+print("Se importó ui_panel en el archivo __init__.py")
 _modules = [ui_panel]
 
 def _reload_modules():
@@ -35,12 +37,8 @@ def register():
             m.register()
 
     # Importar componentes después del arranque (evita ciclos)
-    from visualizador_superficies.operacionesBlender import (
-        superficie_opB,
-        gradiente_opB,
-        ptangente_opB,
-    )
-
+    from visualizador_superficies.operacionesBlender import superficie_opB
+    print("Se importó ptangente_opB en el archivo __init__.py")
 
 
     # 1. Propiedades
@@ -49,7 +47,7 @@ def register():
     # 2. Operadores
     #operacionesBlender.superficie_opB.register()
     #operacionesBlender.gradiente_opB.register()
-    ptangente_opB.register()
+    superficie_opB.register()
 
     # 3. Panel UI
     ui_panel.register()
@@ -59,13 +57,8 @@ def register():
 
 
 def unregister():
-    from visualizador_superficies.operacionesBlender import (
-        superficie_opB,
-        gradiente_opB,
-        ptangente_opB,
-    )
-
-
+    from visualizador_superficies.operacionesBlender import superficie_opB
+    print("Se importó superficie_opB en el archivo __init__.py")
     # Desregistrar en orden inverso
     ui_panel.unregister()
     #operacionesBlender.ptangente_opB.unregister()

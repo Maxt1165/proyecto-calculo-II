@@ -1,4 +1,5 @@
 import bpy
+print("Se importó bpy en el archivo ui_panel")
 #from . import gui
 
 class VISUALIZADOR_PT_Panel(bpy.types.Panel):

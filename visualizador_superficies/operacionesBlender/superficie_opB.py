@@ -1,5 +1,6 @@
 #Creación de superficies
 import bpy
+print("Se importó bpy en el archivo superficie_opB.py")
 #Dada una función matemática z = f(x, y), generar una una malla (grid) que represente esa superficie en el espacio 3D.
 """PASOS
 1. Definir la función: El usuario ingresa una cadena (string) con la expresión matemática, por ejemplo: "x**2 + y**2".
@@ -8,6 +9,7 @@ import bpy
 4. Crear la malla: Construir una malla de vértices y caras (quadrados o triángulos) que represente la superficie.
 5. Añadir el objeto a la escena de Blender """
 from ..logica import superficie_generar
+print("Se importó superficie_generar en el archivo superficie_opB.py")
 
 class CrearSuperficies(bpy.types.Operator):
     bl_idname = "visualizador_superficies.crearsuperficie"
