@@ -52,18 +52,44 @@ class CALCBLENDER_PT_SurfacePanel(bpy.types.Panel):
         if hasattr(props, 'function_preview'):
             box.label(text=f"Función válida: {props.function_preview}", icon='CON_TRANSFORM')
 
-#Registro del panel CALCBLENDER_PT_SurfacePanel
+class CALCBLENDER_PT_GradientePanel(bpy.types.Panel):
+    bl_label      = "Gradientes"
+    bl_idname     = "CALCBLENDER_PT_GradientePanel"
+    bl_parent_id  = "CALCBLENDER_PT_SurfacePanel"   # lo cuelga debajo
+    bl_space_type = 'VIEW_3D'
+    bl_region_type = 'UI'
+    bl_options    = {'DEFAULT_CLOSED'}
+
+    def draw(self, context):
+        layout = self.layout
+        obj = context.active_object
+        props = context.scene.calcblender_props   # (si usas un PropertyGroup global)
+
+        box = layout.box()
+        box.label(text="Visualizar campo ∇f", icon='FORCE_MAGNETIC')
+
+        if obj and "funcion" in obj:
+            row = box.row()
+            row.prop(props, "superficie_resolution", text="Resol.")  # usa la misma resolución global
+            op = box.operator("calcblender.visualizar_gradiente", text="Generar Gradiente")
+            op.resolucion = props.superficie_resolution             # pasa la resolución al operador
+        else:
+            box.label(text="Seleccione una superficie válida", icon='ERROR')
+
+
+classes = (
+    CALCBLENDER_PT_SurfacePanel,
+    CALCBLENDER_PT_GradientePanel,   # ← añade el nuevo
+)
+
 def register():
-    # Registra tu panel principal de superficies
-    bpy.utils.register_class(CALCBLENDER_PT_SurfacePanel)
-    
-    # Registra este panel adicional si lo necesitas
-        #bpy.utils.register_class(VISUALIZADOR_PT_Panel)
+    for cls in classes:
+        bpy.utils.register_class(cls)
 
 def unregister():
-    # Desregistra en orden inverso
-        #bpy.utils.unregister_class(VISUALIZADOR_PT_Panel)
-    bpy.utils.unregister_class(CALCBLENDER_PT_SurfacePanel)
+    for cls in reversed(classes):
+        bpy.utils.unregister_class(cls)
+
 
 ################################################REVISAR
 """# Añadir esto en el panel principal
