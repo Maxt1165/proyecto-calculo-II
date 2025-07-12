@@ -1,5 +1,4 @@
 import bpy
-from . import gui
 
 class VISUALIZADOR_PT_Panel(bpy.types.Panel):
     bl_label = "Panel de Prueba"
