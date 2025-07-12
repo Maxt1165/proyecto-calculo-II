@@ -1,6 +1,5 @@
 import bpy
-import mathutils
-from ..logica import gradiente_calculo
+from . import logica_gradiente_calculo
 
 class CB_OT_VisualizarGradiente(bpy.types.Operator):
     bl_idname = "calcblender.visualizar_gradiente"
@@ -32,7 +31,7 @@ class CB_OT_VisualizarGradiente(bpy.types.Operator):
         y_max = max(v.co.y for v in obj.data.vertices)
         
         # Calcular vectores gradientes
-        vectores = gradiente_calculo.vector_gradiente(
+        vectores = logica_gradiente_calculo.vector_gradiente(
             funcion,
             (x_min, x_max),
             (y_min, y_max),
