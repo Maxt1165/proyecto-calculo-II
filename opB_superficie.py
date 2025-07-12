@@ -16,13 +16,6 @@ class CALCBLENDER_OT_CrearSuperficie(bpy.types.Operator):
     bl_label = "Crear Superficie"
     bl_options = {'REGISTER', 'UNDO'}
 
-    superficie_funcion = bpy.props.StringProperty(name="Función z =")
-    superficie_x_min = bpy.props.FloatProperty(name="X Min", default=-5.0)
-    superficie_x_max = bpy.props.FloatProperty(name="X Max", default=5.0)
-    superficie_y_min = bpy.props.FloatProperty(name="Y Min", default=-5.0)
-    superficie_y_max = bpy.props.FloatProperty(name="Y Max", default=5.0)
-    superficie_resolution = bpy.props.IntProperty(name="Resolución", default=10, min=3, max=50)
-
     @classmethod
     #Verifica si el operador puede ejecutarse 
     def poll(cls, contexto):
@@ -38,7 +31,7 @@ class CALCBLENDER_OT_CrearSuperficie(bpy.types.Operator):
                 expresion=self.superficie_funcion,
                 x_dominio=(self.superficie_x_min, self.superficie_x_max),
                 y_dominio=(self.superficie_y_min, self.superficie_y_max),
-                resolucion=self.superficie_resolution
+                resolucion=self.superficie_resolucion
             )
             obj.location = context.scene.cursor.location
             bpy.ops.object.select_all(action='DESELECT')
