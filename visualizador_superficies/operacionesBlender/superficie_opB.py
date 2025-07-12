@@ -8,7 +8,7 @@ print("Se importó bpy en el archivo superficie_opB.py")
 3. Evaluar la función: Para cada punto (x, y) en el dominio, calcular z = f(x, y).
 4. Crear la malla: Construir una malla de vértices y caras (quadrados o triángulos) que represente la superficie.
 5. Añadir el objeto a la escena de Blender """
-from ..logica import superficie_generar
+from ... import logica_superficie_generar
 print("Se importó superficie_generar en el archivo superficie_opB.py")
 
 class CrearSuperficies(bpy.types.Operator):
@@ -31,7 +31,7 @@ class CrearSuperficies(bpy.types.Operator):
         
         try:
             # Crear superficie
-            obj = superficie_generar.create_surface(
+            obj = logica_superficie_generar.create_surface(
                 expression=props.superficie_funcion,
                 x_domain=(props.superficie_x_min, props.superficie_x_max),
                 y_domain=(props.superficie_y_min, props.superficie_y_max),

@@ -4,7 +4,7 @@ import bpy
 print('Se importó bpy en el archivo superficie_generar')
 import bmesh
 print('Se importó bmesh en el archivo superficie_generar')
-from .soporte_matematica import safe_lambdify
+from .logica_soporte_matematica import safe_lambdify
 print('Se importó safe_lambdify de .soporte_matematica')
 
 
