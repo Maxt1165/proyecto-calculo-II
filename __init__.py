@@ -34,9 +34,30 @@ def register():
     for m in _modules:
         if hasattr(m, "register"):
             m.register()
+"""
+        # Registrar propiedades primero
+    gui.propiedades.register() 
+    
+    # Registrar operadores
+    operacionesBlender.superficie_opB.register()
+    operacionesBlender.gradiente_opB.register()
+    operacionesBlender.ptangente_opB.register()
+    
+    # Registrar UI
+    gui.main_panel.register()
+    
+    # Configurar adaptador
+    utilidades.AdaptorApiB.init()
 
 def unregister():
     for m in reversed(_modules):
         if hasattr(m, "unregister"):
             m.unregister()
+    
+      gui.main_panel.unregister()
+    operacionesBlender.ptangente_opB.unregister()
+    operacionesBlender.gradiente_opB.unregister()
+    operacionesBlender.superficie_opB.unregister()
+    gui.propiedades.unregister()
 
+"""
