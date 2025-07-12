@@ -1,6 +1,5 @@
 import numpy as np
 import sympy as sp
-from .soporte_matematico import safe_lambdify
 
 def calcular_gradiente(expresion, punto):
     """
