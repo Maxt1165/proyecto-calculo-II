@@ -1,5 +1,5 @@
 #Creación de superficies
-
+import bpy
 #Dada una función matemática z = f(x, y), generar una una malla (grid) que represente esa superficie en el espacio 3D.
 """PASOS
 1. Definir la función: El usuario ingresa una cadena (string) con la expresión matemática, por ejemplo: "x**2 + y**2".
@@ -56,6 +56,3 @@ class CrearSuperficies(bpy.types.Operator):
         except Exception as e:  # Manejo de errores
             self.report({'ERROR'}, f"Error: {str(e)}")  # Muestra error en la UI
             return {'CANCELLED'}  # Indica que la operación falló
-            
-
-  
