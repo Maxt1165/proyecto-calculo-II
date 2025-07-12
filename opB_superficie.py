@@ -8,10 +8,10 @@ print("Se importó bpy en el archivo superficie_opB.py")
 3. Evaluar la función: Para cada punto (x, y) en el dominio, calcular z = f(x, y).
 4. Crear la malla: Construir una malla de vértices y caras (quadrados o triángulos) que represente la superficie.
 5. Añadir el objeto a la escena de Blender """
-from ... import logica_superficie_generar
+from . import logica_superficie_generar
 print("Se importó superficie_generar en el archivo opB_superficie.py")
 
-class CrearSuperficies(bpy.types.Operator):
+class CALCBLENDER_OT_CrearSuperficie(bpy.types.Operator):
     bl_idname = "visualizador_superficies.crearsuperficie"
     bl_label = "Crear Superficie"
     bl_options = {'REGISTER', 'UNDO'}
@@ -56,3 +56,18 @@ class CrearSuperficies(bpy.types.Operator):
         except Exception as e:  # Manejo de errores
             self.report({'ERROR'}, f"Error: {str(e)}")  # Muestra error en la UI
             return {'CANCELLED'}  # Indica que la operación falló
+        
+def register():
+    try:
+        bpy.utils.register_class(CALCBLENDER_OT_CrearSuperficie)
+    except ValueError:
+        print("Clase ya registrada, se vuelve a registrar.")
+        bpy.utils.unregister_class(CALCBLENDER_OT_CrearSuperficie)
+        bpy.utils.register_class(CALCBLENDER_OT_CrearSuperficie)
+
+def unregister():
+    try:
+        bpy.utils.unregister_class(CALCBLENDER_OT_CrearSuperficie)
+    except RuntimeError:
+        print("Clase ya estaba desregistrada.")
+

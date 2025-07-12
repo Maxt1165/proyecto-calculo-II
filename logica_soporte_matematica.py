@@ -1,3 +1,5 @@
+import sys
+sys.path.append("C:/Users/maoao/AppData/Local/Programs/Python/Python311/Lib/site-packages")
 import sympy as sp
 print('Se importó sympy en el archivo soporte_matematica')
 import numpy as np
