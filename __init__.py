@@ -31,7 +31,6 @@ def register():
     for m in _modules:
         if hasattr(m, "register"):
             m.register()
-    from . import ui_panel
     from  .import gui
     from .import operacionesBlender
     from .import utilidades
@@ -55,7 +54,6 @@ def unregister():
     for m in reversed(_modules):
         if hasattr(m, "unregister"):
             m.unregister()
-    from . import ui_panel
     from  .import gui
     from .import operacionesBlender
     from .import utilidades
