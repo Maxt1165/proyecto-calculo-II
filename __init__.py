@@ -16,11 +16,9 @@ def register():
 
 def unregister():
     ui_panel.unregister()
+    
+# ESTO ACTUALIZARA LOS MODULOS (ARCHIVOS) CADA QUE SE RECARGA ESTE __init__.py
 
-
-# ------------------------------------------------------------------ #
-#  IMPORTACIÓN DE SUBMÓDULOS
-# ------------------------------------------------------------------ #
 import importlib
 
 from . import ui_panel, mesh_surface, gradiente, plano_tangente
@@ -42,19 +40,3 @@ def unregister():
         if hasattr(m, "unregister"):
             m.unregister()
 
-
-
-# ------------------------------------------------------------------ #
-#  FUNCIONES DE REGISTRO OBLIGATORIAS PARA TODO ADD‑ON
-# ------------------------------------------------------------------ #
-#def register():
-#    _reload_submodules()        # Recarga si el add‑on ya estaba activo
-#    for m in _modules:          # Llama register() de cada archivo
-#        if hasattr(m, "register"):
-#            m.register()
-
-
-#def unregister():
- #   for m in reversed(_modules):  # En orden inverso por seguridad
-  #      if hasattr(m, "unregister"):
-   #         m.unregister()
