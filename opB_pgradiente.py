@@ -7,13 +7,13 @@ class CB_OT_VisualizarGradiente(bpy.types.Operator):
     bl_description = "Crea una representación visual del campo vectorial gradiente"
     bl_options = {'REGISTER', 'UNDO'}
     
-    resolucion: bpy.props.IntProperty(
+    resolucion = bpy.props.IntProperty(
         name="Resolución",
         default=10,
         min=3,
         max=30
     )
-    
+
     @classmethod
     def poll(cls, context):
         # Solo disponible si hay una superficie seleccionada
