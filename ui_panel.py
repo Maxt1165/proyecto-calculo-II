@@ -12,7 +12,8 @@ class VISUALIZADOR_PT_Panel(bpy.types.Panel):
     def draw(self, context):
         layout = self.layout
         layout.label(text="GANARON LOS MALOS 🗣️")
-
+        
+#main_panel 
 class CALCBLENDER_PT_SurfacePanel(bpy.types.Panel):
     bl_label = "Superficies"
     bl_idname = "CALCBLENDER_PT_SurfacePanel"

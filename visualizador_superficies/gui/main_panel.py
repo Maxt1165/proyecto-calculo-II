@@ -1,4 +1,5 @@
 import bpy
+print('Se importó bpy en el archivo main_panel')
 
 class CALCBLENDER_PT_SurfacePanel(bpy.types.Panel):
     bl_label = "Superficies"
@@ -37,9 +38,3 @@ class CALCBLENDER_PT_SurfacePanel(bpy.types.Panel):
         # Previsualización matemática
         if hasattr(props, 'function_preview'):
             box.label(text=f"Función válida: {props.function_preview}", icon='CON_TRANSFORM')
-
-def register():
-    bpy.utils.register_class(CALCBLENDER_PT_SurfacePanel)
-
-def unregister():
-    bpy.utils.unregister_class(CALCBLENDER_PT_SurfacePanel)

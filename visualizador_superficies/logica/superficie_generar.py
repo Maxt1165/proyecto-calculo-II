@@ -1,7 +1,12 @@
 import numpy as np
+print('Se importó numpy en el archivo superficie_generar')
 import bpy
+print('Se importó bpy en el archivo superficie_generar')
 import bmesh
+print('Se importó bmesh en el archivo superficie_generar')
 from .soporte_matematica import safe_lambdify
+print('Se importó safe_lambdify de .soporte_matematica')
+
 
 def create_surface(expression, x_domain, y_domain, resolution):
     """Crea una superficie 3D a partir de z=f(x,y) en Blender 4.4.3"""

@@ -1,6 +1,9 @@
 import sympy as sp
+print('Se importó sympy en el archivo soporte_matematica')
 import numpy as np
+print('Se importó numpy en el archivo soporte_matematica')
 import re
+print('Se importó ¿re? en el archivo soporte_matematica')
 
 def safe_lambdify(expression):
     """Crea función numérica segura para Blender 4.4.3"""
