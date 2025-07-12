@@ -28,39 +28,55 @@ def _reload_modules():
 
 def register():
     _reload_modules()
+    
+    # Registrar módulos base (como ui_panel)
     for m in _modules:
         if hasattr(m, "register"):
             m.register()
-    from  .import gui
-    from .import operacionesBlender
-    from .import utilidades
+
+    # Importar componentes después del arranque (evita ciclos)
+    from visualizador_superficies.operacionesBlender import (
+        superficie_opB,
+        gradiente_opB,
+        ptangente_opB,
+    )
+
+
+
+    # 1. Propiedades
+
+
+    # 2. Operadores
+    #operacionesBlender.superficie_opB.register()
+    #operacionesBlender.gradiente_opB.register()
+    ptangente_opB.register()
+
+    # 3. Panel UI
     ui_panel.register()
 
-    # Registrar propiedades primero
-    gui.propiedades.register() 
-    
-    # Registrar operadores
-    operacionesBlender.superficie_opB.register()
-    operacionesBlender.gradiente_opB.register()
-    operacionesBlender.ptangente_opB.register()
-    
-    # Registrar UI
-    gui.main_panel.register()
-    
-    # Configurar adaptador
-    utilidades.AdaptorApiB.init()
+    # 4. Inicializar adaptador o servicios
+
+
 
 def unregister():
+    from visualizador_superficies.operacionesBlender import (
+        superficie_opB,
+        gradiente_opB,
+        ptangente_opB,
+    )
+
+
+    # Desregistrar en orden inverso
+    ui_panel.unregister()
+    #operacionesBlender.ptangente_opB.unregister()
+    #operacionesBlender.gradiente_opB.unregister()
+    superficie_opB.unregister()
+    
+
+    # Si hay que cerrar algo del adaptador, sería aquí
+
+    # Finalmente, desregistrar ui_panel y otros módulos
     for m in reversed(_modules):
         if hasattr(m, "unregister"):
             m.unregister()
-    from  .import gui
-    from .import operacionesBlender
-    from .import utilidades
-    ui_panel.unregister()
-    gui.main_panel.unregister()
-    operacionesBlender.ptangente_opB.unregister()
-    operacionesBlender.gradiente_opB.unregister()
-    operacionesBlender.superficie_opB.unregister()
-    gui.propiedades.unregister()
 

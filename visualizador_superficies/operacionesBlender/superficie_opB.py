@@ -9,7 +9,6 @@ import bpy
 5. Añadir el objeto a la escena de Blender """
 import bpy
 from ..logica import superficie_generar
-from ..utilidades import manejoErrores
 
 class CrearSuperficies(bpy.types.Operator):
     bl_idname = "visualizador_superficies.crearsuperficie"
