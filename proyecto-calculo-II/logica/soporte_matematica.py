@@ -5,12 +5,12 @@ import re
 def safe_lambdify(expression):
     """Crea función numérica segura para Blender 4.4.3"""
     # Limpiar expresión para seguridad
-    clean_expr = re.sub(r'[^0-9a-zA-Z\+\-\*\/\^\(\)\.]', '', expression)
+    limpiar_expr = re.sub(r'[^0-9a-zA-Z\+\-\*\/\^\(\)\.]', '', expression)
     
     try:
         # Convertir a expresión simbólica
         x, y = sp.symbols('x y')
-        expr = sp.sympify(clean_expr)
+        expr = sp.sympify(limpiar_expr)
         
         # Crear función vectorizada
         f = sp.lambdify((x, y), expr, modules='numpy')
@@ -30,7 +30,7 @@ def safe_lambdify(expression):
         
         return error_func
     
-    import sympy as sp
+import sympy as sp
 import numpy as np
 import re
 
