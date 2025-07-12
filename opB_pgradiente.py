@@ -47,7 +47,7 @@ class CB_OT_VisualizarGradiente(bpy.types.Operator):
         for origen, vector in vectores:
             # Crear geometría de flecha
             mesh_flecha = bpy.data.meshes.new("Flecha")
-            bm = bmesh.new()
+            bm = bmesh.new() # type: ignore
             
             # Punto origen y destino
             destino = (

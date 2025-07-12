@@ -1,7 +1,11 @@
 import bpy
 print("Se importó bpy en el archivo ui_panel")
-#from . import gui
+<<<<<<< HEAD
 
+=======
+#from . import gui
+>>>>>>> da839a64e0b095bd69ecd40a4486472f9ca3007c
+"""
 class VISUALIZADOR_PT_Panel(bpy.types.Panel):
     bl_label = "Panel de Prueba"
     bl_idname = "VISUALIZADOR_PT_panel"
@@ -12,7 +16,7 @@ class VISUALIZADOR_PT_Panel(bpy.types.Panel):
     def draw(self, context):
         layout = self.layout
         layout.label(text="GANARON LOS MALOS 🗣️")
-        
+        """
 #main_panel 
 class CALCBLENDER_PT_SurfacePanel(bpy.types.Panel):
     bl_label = "Superficies"
