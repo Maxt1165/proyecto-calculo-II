@@ -11,7 +11,7 @@ print("Se importó bpy en el archivo superficie_opB.py")
 from . import logica_superficie_generar
 print("Se importó superficie_generar en el archivo opB_superficie.py")
 
-class CrearSuperficies(bpy.types.Operator):
+class CALCBLENDER_OT_CrearSuperficie(bpy.types.Operator):
     bl_idname = "visualizador_superficies.crearsuperficie"
     bl_label = "Crear Superficie"
     bl_options = {'REGISTER', 'UNDO'}
@@ -58,7 +58,16 @@ class CrearSuperficies(bpy.types.Operator):
             return {'CANCELLED'}  # Indica que la operación falló
         
 def register():
-    bpy.utils.register_class(CrearSuperficies)
+    try:
+        bpy.utils.register_class(CALCBLENDER_OT_CrearSuperficie)
+    except ValueError:
+        print("Clase ya registrada, se vuelve a registrar.")
+        bpy.utils.unregister_class(CALCBLENDER_OT_CrearSuperficie)
+        bpy.utils.register_class(CALCBLENDER_OT_CrearSuperficie)
 
 def unregister():
-    bpy.utils.unregister_class(CrearSuperficies)
+    try:
+        bpy.utils.unregister_class(CALCBLENDER_OT_CrearSuperficie)
+    except RuntimeError:
+        print("Clase ya estaba desregistrada.")
+
