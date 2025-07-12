@@ -7,14 +7,18 @@ def calcular_gradiente(expresion, punto):
     
     Args:
         expresion (str): Función matemática (ej: "x**2 + y**2")
-        punto (tuple): Punto (x, y) donde calcular el gradiente
-        
+        punto (tuple): Punto (x, y) donde calcular el gradiente 
     Returns:
         tuple: Vector gradiente (df/dx, df/dy)
     """
     # 1. Crear símbolos y expresión
     x, y = sp.symbols('x y')
-    expr = sp.sympify(expresion)
+    try:
+        expr = sp.sympify(expresion)
+    except (sp.SympifyError, TypeError):
+        print(f"Expresión inválida: {expresion}")
+    return (0.0, 0.0)
+
     
     # 2. Calcular derivadas parciales
     df_dx = sp.diff(expr, x)
@@ -28,8 +32,7 @@ def calcular_gradiente(expresion, punto):
 
 def vector_gradiente(funcion, dominio_x, dominio_y, resolucion=20):
     """
-    Genera un campo vectorial del gradiente para visualización
-    
+    Genera un campo vectorial del gradiente para visualización 
     Args:
         funcion (str): Función matemática
         dominio_x (tuple): Rango en X (min, max)

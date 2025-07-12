@@ -1,5 +1,6 @@
 import bpy
 from . import logica_gradiente_calculo
+import bmesh  # type: ignore
 
 class CB_OT_VisualizarGradiente(bpy.types.Operator):
     bl_idname = "calcblender.visualizar_gradiente"
@@ -45,39 +46,23 @@ class CB_OT_VisualizarGradiente(bpy.types.Operator):
         
         # Crear flechas para cada vector
         for origen, vector in vectores:
-            # Crear geometría de flecha
-            mesh_flecha = bpy.data.meshes.new("Flecha")
-            bm = bmesh.new() # type: ignore
-            
-            # Punto origen y destino
-            destino = (
-                origen[0] + vector[0],
-                origen[1] + vector[1],
-                origen[2] + vector[2]
-            )
-            
-            # Crear vértices
-            v1 = bm.verts.new(origen)
-            v2 = bm.verts.new(destino)
-            
-            # Crear cono en la punta
-            bm.verts.ensure_lookup_table()
-            flecha = bm.verts.new((
-                destino[0] - vector[0]*0.2,
-                destino[1] - vector[1]*0.2,
-                destino[2] - vector[2]*0.2
-            ))
-            
-            # Crear arista y cara
-            bm.edges.new((v1, v2))
-            bm.faces.new((v2, flecha))
-            
-            bm.to_mesh(mesh_flecha)
-            bm.free()
-            
-            # Crear objeto y añadir a la curva
-            obj_flecha = bpy.data.objects.new("Flecha", mesh_flecha)
-            context.collection.objects.link(obj_flecha)
-        
+                mesh_flecha = bpy.data.meshes.new("Flecha")
+                bm = bmesh.new()
+
+                destino = (
+                    origen[0] + vector[0],
+                    origen[1] + vector[1],
+                    origen[2] + vector[2]
+                )
+
+                v1 = bm.verts.new(origen)
+                v2 = bm.verts.new(destino)
+                bm.edges.new((v1, v2))
+
+                bm.to_mesh(mesh_flecha)
+                bm.free()
+
+                obj_flecha = bpy.data.objects.new("Flecha", mesh_flecha)
+                context.collection.objects.link(obj_flecha)
         self.report({'INFO'}, f"Campo gradiente creado para {funcion}")
         return {'FINISHED'}

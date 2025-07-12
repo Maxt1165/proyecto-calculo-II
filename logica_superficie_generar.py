@@ -37,13 +37,16 @@ def crear_superficie(expresion, x_dominio, y_dominio, resolucion):
     for j in range(resolucion-1):
         for i in range(resolucion-1):
             idx = j * resolucion + i
-            bm.faces.new((
-                verts[idx], 
-                verts[idx+1], 
-                verts[idx+resolucion+1], 
-                verts[idx+resolucion]
-            ))
-    
+    try:
+        bm.faces.new((
+            verts[idx], 
+            verts[idx+1], 
+            verts[idx+resolucion+1], 
+            verts[idx+resolucion]
+        ))
+    except ValueError:
+        pass  # cara ya creada o inválida
+
     # 4. Crear objeto que aparezca: Se crea un nuevo objeto malla/mesh
         # y se transfiere la geometría generada.
     malla = bpy.data.meshes.new(name=f"Superficie_{expresion}")

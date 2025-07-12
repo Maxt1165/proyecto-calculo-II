@@ -25,14 +25,14 @@ class CALCBLENDER_OT_CrearSuperficie(bpy.types.Operator):
     """carga las propiedades guardadas (función matemática y rangos)
     desde Blender para usarlas en cálculos"""
     def execute(self, context):
-        # Accede directamente a las propiedades del operador
+        props = context.scene.calcblender_props  # Accede directamente a las propiedades del operador
         try:
             obj = logica_superficie_generar.crear_superficie(
-                expresion=self.superficie_funcion,
-                x_dominio=(self.superficie_x_min, self.superficie_x_max),
-                y_dominio=(self.superficie_y_min, self.superficie_y_max),
-                resolucion=self.superficie_resolucion
-            )
+            expresion=props.superficie_funcion,
+            x_dominio=(props.superficie_x_min, props.superficie_x_max),
+            y_dominio=(props.superficie_y_min, props.superficie_y_max),
+            resolucion=props.superficie_resolucion
+        )
             obj.location = context.scene.cursor.location
             bpy.ops.object.select_all(action='DESELECT')
             context.view_layer.objects.active = obj
