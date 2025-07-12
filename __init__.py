@@ -50,7 +50,7 @@ def register():
     opB_superficie.register()
 
     # 3. Panel UI
-    ui_panel.register()
+    #ui_panel.register()
 
     # 4. Inicializar adaptador o servicios
 
@@ -60,7 +60,7 @@ def unregister():
     from . import opB_superficie
     print("Se importó opB_superficie en el archivo __init__.py")
     # Desregistrar en orden inverso
-    ui_panel.unregister()
+    #ui_panel.unregister()
     #operacionesBlender.ptangente_opB.unregister()
     #operacionesBlender.gradiente_opB.unregister()
     opB_superficie.unregister()
