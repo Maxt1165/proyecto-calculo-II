@@ -10,6 +10,9 @@ bl_info = {
 
 import bpy
 from . import ui_panel
+from  .import gui
+from .import operacionesBlender
+from .import utilidades
 
 def register():
     ui_panel.register()
@@ -18,11 +21,8 @@ def unregister():
     ui_panel.unregister()
 
 # ESTO ACTUALIZARA LOS MODULOS (ARCHIVOS) CADA QUE SE RECARGA ESTE __init__.py
-
 import importlib
-
 from . import ui_panel
-
 _modules = [ui_panel]
 
 def _reload_modules():
@@ -35,7 +35,9 @@ def register():
         if hasattr(m, "register"):
             m.register()
 
-        # Registrar propiedades primero
+
+
+    # Registrar propiedades primero
     gui.propiedades.register() 
     
     # Registrar operadores
