@@ -9,7 +9,7 @@ print("Se importó bpy en el archivo superficie_opB.py")
 4. Crear la malla: Construir una malla de vértices y caras (quadrados o triángulos) que represente la superficie.
 5. Añadir el objeto a la escena de Blender """
 from ... import logica_superficie_generar
-print("Se importó superficie_generar en el archivo superficie_opB.py")
+print("Se importó superficie_generar en el archivo opB_superficie.py")
 
 class CrearSuperficies(bpy.types.Operator):
     bl_idname = "visualizador_superficies.crearsuperficie"

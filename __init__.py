@@ -9,20 +9,19 @@ bl_info = {
 }
 
 import bpy
-from .import ui_panel
-from  .import gui
-from .import operacionesBlender
-from .import utilidades
+print("Se importó bpy en el archivo __init__.py")
 
-def register():
-    ui_panel.register()
+#def register():
+   # ui_panel.register()
 
-def unregister():
-    ui_panel.unregister()
+#def unregister():
+   # ui_panel.unregister()
 
 # ESTO ACTUALIZARA LOS MODULOS (ARCHIVOS) CADA QUE SE RECARGA ESTE __init__.py
 import importlib
+print("Se importó importlib en el archivo __init__.py")
 from . import ui_panel
+print("Se importó ui_panel en el archivo __init__.py")
 _modules = [ui_panel]
 
 def _reload_modules():
@@ -31,32 +30,46 @@ def _reload_modules():
 
 def register():
     _reload_modules()
+    
+    # Registrar módulos base (como ui_panel)
     for m in _modules:
         if hasattr(m, "register"):
             m.register()
 
-    # Registrar propiedades primero
-    gui.propiedades.register() 
-    
-    # Registrar operadores
-    operacionesBlender.superficie_opB.register()
-    operacionesBlender.gradiente_opB.register()
-    operacionesBlender.ptangente_opB.register()
-    
-    # Registrar UI
-    gui.main_panel.register()
-    
-    # Configurar adaptador
-    utilidades.AdaptorApiB.init()
+    # Importar componentes después del arranque (evita ciclos)
+    from . import opB_superficie
+    print("Se importó opB_superficie en el archivo __init__.py")
+
+
+    # 1. Propiedades
+
+
+    # 2. Operadores
+    #operacionesBlender.superficie_opB.register()
+    #operacionesBlender.gradiente_opB.register()
+    opB_superficie.register()
+
+    # 3. Panel UI
+    ui_panel.register()
+
+    # 4. Inicializar adaptador o servicios
+
+
 
 def unregister():
+    from . import opB_superficie
+    print("Se importó opB_superficie en el archivo __init__.py")
+    # Desregistrar en orden inverso
+    ui_panel.unregister()
+    #operacionesBlender.ptangente_opB.unregister()
+    #operacionesBlender.gradiente_opB.unregister()
+    opB_superficie.unregister()
+    
+
+    # Si hay que cerrar algo del adaptador, sería aquí
+
+    # Finalmente, desregistrar ui_panel y otros módulos
     for m in reversed(_modules):
         if hasattr(m, "unregister"):
             m.unregister()
-    
-    gui.main_panel.unregister()
-    operacionesBlender.ptangente_opB.unregister()
-    operacionesBlender.gradiente_opB.unregister()
-    operacionesBlender.superficie_opB.unregister()
-    gui.propiedades.unregister()
 
