@@ -1,24 +1,42 @@
-# Registro del add-on
-
 bl_info = {
-    "name": "Visualizador de Superficies",
-    "blender": (3, 0, 0),
-    "category": "3D View",
+    "name":        "visualizador_superficies",
+    "description": "Genera superficies z=f(x,y), curvas de nivel, gradiente y plano tangente",
+    "author":      "LyM",
+    "version":     (0, 1, 0),
+    "blender":     (4, 4, 3),
+    "location":    "View3D › Sidebar › Superficies",
+    "category":    "3D View",
 }
 
 import bpy
-from . import ui_panel, mesh_surface, gradiente, plano_tangente
+from . import ui_panel
 
 def register():
     ui_panel.register()
-    mesh_surface.register()
-    gradiente.register()
-    plano_tangente.register()
 
 def unregister():
     ui_panel.unregister()
-    mesh_surface.unregister()
-    gradiente.unregister()
-    plano_tangente.unregister()
-#Vivan las tareas :D
-#Te quiero y :3
+    
+# ESTO ACTUALIZARA LOS MODULOS (ARCHIVOS) CADA QUE SE RECARGA ESTE __init__.py
+
+import importlib
+
+from . import ui_panel, mesh_surface, gradiente, plano_tangente
+
+_modules = [ui_panel, mesh_surface, gradiente, plano_tangente]
+
+def _reload_modules():
+    for m in _modules:
+        importlib.reload(m)
+
+def register():
+    _reload_modules()
+    for m in _modules:
+        if hasattr(m, "register"):
+            m.register()
+
+def unregister():
+    for m in reversed(_modules):
+        if hasattr(m, "unregister"):
+            m.unregister()
+
