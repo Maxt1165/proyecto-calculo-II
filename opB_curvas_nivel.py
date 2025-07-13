@@ -44,8 +44,8 @@ class CB_OT_CurvasNivel(Operator):
 
             for z, lista_de_curvas in curvas_dict.items():
                 for curva in lista_de_curvas:
-                    logica_curvas_nivel.crear_curva_bezier(curva, z)
-
+                    altura = 0.0 if props.mostrar_curvas_z0 else z
+                    logica_curvas_nivel.crear_curva_bezier(curva, altura)
             self.report({'INFO'}, f"Curvas de nivel creadas de z={zmin} a z={zmax}")
             return {'FINISHED'}
         
@@ -53,31 +53,8 @@ class CB_OT_CurvasNivel(Operator):
             self.report({'ERROR'}, f"Error al generar curvas: {e}")
             return {'CANCELLED'}
 
-class CB_OT_AnimarCurvasNivel(bpy.types.Operator):
-    bl_idname = "calcblender.animar_curvas_nivel"
-    bl_label = "Animar Curvas de Nivel"
-    bl_description = "Anima las curvas de nivel proyectándolas hacia el plano z=0"
-    bl_options = {'REGISTER', 'UNDO'}
-
-    def execute(self, context):
-        # Filtrar solo objetos tipo CURVE que fueron generados como curvas de nivel
-        curvas = [
-            obj for obj in bpy.context.scene.objects
-            if obj.type == 'CURVE' and obj.name.startswith("CurvaNivel")
-        ]
-        if not curvas:
-            self.report({'ERROR'}, "No se encontraron curvas de nivel para animar.")
-            return {'CANCELLED'}
-        
-        # Llama a la función lógica que realiza la animación
-        animar_curvas_a_plano(curvas, frame_inicio=1, duracion=30)
-        self.report({'INFO'}, f"{len(curvas)} curvas animadas hacia z = 0.")
-        return {'FINISHED'}
-
 def register():
     bpy.utils.register_class(CB_OT_CurvasNivel)
-    bpy.utils.register_class(CB_OT_AnimarCurvasNivel)
 
 def unregister():
-    bpy.utils.unregister_class(CB_OT_AnimarCurvasNivel)
     bpy.utils.unregister_class(CB_OT_CurvasNivel)

@@ -24,18 +24,30 @@ def obtener_curvas_de_nivel(expr, x_range, y_range, resolucion, niveles):
     Z = f(X, Y)
 
     # Paso 3: Usar matplotlib para obtener contornos
+    if not niveles:
+        raise ValueError("La lista de niveles de curvas está vacía.")
+    
+    # Crear figura sin mostrarla (modo backend)
     fig, ax = plt.subplots()
     contornos = ax.contour(X, Y, Z, levels=niveles)
     
+    # Validar si se generaron curvas
+    if not contornos.collections or all(len(c.get_paths()) == 0 for c in contornos.collections):
+        plt.close(fig)
+        raise ValueError("No se generaron curvas de nivel con los parámetros dados. Verifique la función o el rango z.")
+    
+    # Extraer curvas por nivel
     resultado = {}
     for nivel, coleccion in zip(contornos.levels, contornos.collections):
         curvas = []
         for path in coleccion.get_paths():
-            v = path.vertices  # Lista de (x, y)
-            if len(v) >= 2:
-                curvas.append(v.tolist())
+            vert = path.vertices  # Lista de (x, y)
+            if len(vert) >= 2:
+                curvas.append(vert.tolist())
         resultado[nivel] = curvas
     
+    if curvas:
+        resultado[nivel] = curvas
     plt.close(fig)  # Cierra la figura para evitar consumir memoria
     return resultado
 
@@ -43,7 +55,8 @@ def obtener_curvas_de_nivel(expr, x_range, y_range, resolucion, niveles):
 def crear_curva_bezier(contorno, nivel_z, nombre="CurvaNivel"):
     """Crea una curva Bézier en Blender desde una lista de puntos [(x, y), ...],
     y la coloca en z = nivel_z."""
-    if len(contorno) < 2:
+    if not contorno or len(contorno) < 2:
+        print(f"Omitido: curva con menos de 2 puntos en nivel z={nivel_z}")
         return None
 
     # 1. Crear un nuevo objeto de tipo CURVE
@@ -54,7 +67,6 @@ def crear_curva_bezier(contorno, nivel_z, nombre="CurvaNivel"):
     # Mejora de visibilidad en viewport
     curva_data.bevel_depth = 0.02
     curva_data.bevel_resolution = 3
-
 
     # 2. Crear un spline Bézier
     spline = curva_data.splines.new(type='BEZIER')
@@ -70,40 +82,13 @@ def crear_curva_bezier(contorno, nivel_z, nombre="CurvaNivel"):
     if (mathutils.Vector(contorno[0]) - mathutils.Vector(contorno[-1])).length < 1e-2:
         spline.use_cyclic_u = True
 
-    # 4. Crear el objeto en la escena
-    nombre_objeto = f"{nombre}_z{nivel_z:.1f}"
-    
-    # Eliminar objeto previo con mismo nombre (si existe)
+    # 4. Eliminar objeto anterior si ya existe con ese nombre
+    nombre_objeto = f"{nombre}_z{nivel_z:.2f}"
     if nombre_objeto in bpy.data.objects:
         bpy.data.objects.remove(bpy.data.objects[nombre_objeto], do_unlink=True)
+
+    # 5. Crear objeto y vincularlo a la escena
     curva_obj = bpy.data.objects.new(nombre_objeto, curva_data)
     bpy.context.collection.objects.link(curva_obj)
-    
     return curva_obj
-
-def animar_curvas_a_plano(objetos_curvas, frame_inicio=1, duracion=20):
-    """ Anima curvas desde su altura actual (z = nivel) hasta z = 0. 
-    Args:
-        objetos_curvas (list): Lista de objetos de tipo curva (bpy.types.Object)
-        frame_inicio (int): Cuadro inicial de la animación
-        duracion (int): Número de cuadros que durará la caída"""
-    
-    for i, curva_obj in enumerate(objetos_curvas):
-        if not curva_obj or curva_obj.type != 'CURVE':
-            continue  # ignorar objetos inválidos
-        
-        # Frame base para esta curva (puedes escalonar si quieres)
-        f_ini = frame_inicio + i
-        f_fin = f_ini + duracion
-
-        # Posición original
-        z_original = curva_obj.location.z
-
-        # Keyframe en altura original
-        curva_obj.location.z = z_original
-        curva_obj.keyframe_insert(data_path="location", frame=f_ini)
-
-        # Keyframe en z = 0
-        curva_obj.location.z = 0.0
-        curva_obj.keyframe_insert(data_path="location", frame=f_fin)
-
+ 

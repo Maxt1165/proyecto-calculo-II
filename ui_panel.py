@@ -120,8 +120,8 @@ class CALCBLENDER_PT_CurvasNivelPanel(bpy.types.Panel):
 
         # Botón para generar curvas de nivel
         box.operator("calcblender.curvas_nivel", text="Generar Curvas", icon="OUTLINER_OB_CURVE")
-        # Botón para animarlas a z=0
-        box.operator("calcblender.animar_curvas_nivel", text="Animar Curvas a Z=0", icon="PLAY")
+        # Botón para mostrarlas en z=0
+        box.prop(props, "mostrar_curvas_z0")
 
 
 class CALCBLENDER_PT_IntegralPanel(bpy.types.Panel):
