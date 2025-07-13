@@ -23,13 +23,15 @@ from . import logica_gradiente_calculo
 from . import opB_pgradiente
 
 from . import opB_ptangente
+from . import logica_integral_calculo
+from . import opB_integral
 
 from . import ui_panel
 
 _modules = [ util_propiedades, 
             logica_superficie_generar, logica_soporte_matematica, opB_superficie,
             logica_gradiente_calculo, opB_pgradiente,
-            opB_ptangente, ui_panel]  # AQUI SE AÑADIRAN LOS MODULOS A DESARROLLAR
+            opB_ptangente, logica_integral_calculo, opB_integral, ui_panel]  # AQUI SE AÑADIRAN LOS MODULOS A DESARROLLAR
 
 def _reload_modules():
     for m in _modules:
