@@ -9,7 +9,7 @@ print('Se importaron los módulos necesarios')
 expresión matemática z=f(x,y), usando NumPy, SymPy y BMesh (eficiencia)"""
 #CUADRICULA = GRID
 
-def crear_superficie(expresion, x_dominio, y_dominio, resolucion):
+def crear_superficie(expresion, x_dominio, y_dominio, resolucion,props):
     # 1. Preparar función vectorizada(numpy_evaluable)
     """Convierte la expresión simbólica expresion en una función NumPy-evaluable"""
     f = hacerfuncion_segura(expresion)
@@ -19,7 +19,9 @@ def crear_superficie(expresion, x_dominio, y_dominio, resolucion):
     y = np.linspace(*y_dominio, resolucion)
     X, Y = np.meshgrid(x, y) #genera las coordenadas en forma matricial
     Z = f(X, Y)
-    
+# Limitar altura visual entre Z min y Z max desde UI
+    Z = np.clip(Z, props.superficie_z_min, props.superficie_z_max)
+
     # 3. Crear malla con BMesh
     """Sistema de edición de mallas eficiente en Blender (ideal para geometrías dinámicas)
     Aquí se va a crear la geometría punto por punto y luego se armarán las caras"""

@@ -40,6 +40,9 @@ class CALCBLENDER_PT_SurfacePanel(bpy.types.Panel):
         grid.prop(props, "superficie_x_max", text="X Max")
         grid.prop(props, "superficie_y_min", text="Y Min")
         grid.prop(props, "superficie_y_max", text="Y Max")
+        # NUEVO: límites visuales para Z
+        grid.prop(props, "superficie_z_min", text="Z Min")
+        grid.prop(props, "superficie_z_max", text="Z Max")
         
         # Resolución con slider
         box.prop(props, "superficie_resolucion", slider=True)
