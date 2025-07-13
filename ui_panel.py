@@ -25,10 +25,6 @@ class CALCBLENDER_PT_SurfacePanel(bpy.types.Panel):
     def draw(self, context):
         layout = self.layout
         props = context.scene.calcblender_props #accede al grupo de propiedades personalizado del proyecto
-        #PRUEBA_________________________________________
-        layout.label(text="PRUEBA de texto:")
-        layout.prop(props, "superficie_funcion", text="z = f(x,y)")
-
         # Configuración de superficie: caja principal
         box = layout.box()
         box.label(text="Crear Superficie", icon='MESH_GRID')
