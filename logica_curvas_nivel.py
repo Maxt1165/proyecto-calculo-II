@@ -70,6 +70,10 @@ def crear_curva_bezier(contorno, nivel_z, nombre_base="CurvaNivel"):
         (x1, y1), (x2, y2) = segmento
 
         # Crear datos de curva
+        nombre_data = f"{nombre_base}_data_{idx}"
+        if nombre_data in bpy.data.curves:
+            bpy.data.curves.remove(bpy.data.curves[nombre_data], do_unlink=True)
+
         curva_data = bpy.data.curves.new(name=f"{nombre_base}_data_{idx}", type='CURVE')
         curva_data.dimensions = '3D'
         curva_data.resolution_u = 12
@@ -93,9 +97,13 @@ def crear_curva_bezier(contorno, nivel_z, nombre_base="CurvaNivel"):
             bpy.data.objects.remove(bpy.data.objects[nombre_obj], do_unlink=True)
 
         curva_obj = bpy.data.objects.new(nombre_obj, curva_data)
-        bpy.context.collection.objects.link(curva_obj)
+        bpy.context.scene.collection.objects.link(curva_obj)
         #Esto asegura que cada objeto tenga el material antes de ser retornado.
-        curva_obj.data.materials.append(bpy.data.materials.get("CurvasMaterial") or bpy.data.materials.new("CurvasMaterial"))
+        if "CurvasMaterial" not in bpy.data.materials:
+            mat = bpy.data.materials.new(name="CurvasMaterial")
+        else:
+            mat = bpy.data.materials["CurvasMaterial"]
+        curva_obj.data.materials.append(mat)
         objetos_creados.append(curva_obj)
-        
+
     return objetos_creados
