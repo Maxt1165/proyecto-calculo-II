@@ -1,22 +1,20 @@
 import numpy as np
-print('Se importó numpy en el archivo superficie_generar')
 import bpy
-print('Se importó bpy en el archivo superficie_generar')
 import bmesh # type: ignore
-print('Se importó bmesh en el archivo superficie_generar')
 from .logica_soporte_matematica import hacerfuncion_segura
-print('Se importó safe_lambdify de .soporte_matematica')
+
+print('Se importaron los módulos necesarios')
 
 """Propósito:Generar una superficie 3D en Blender a partir de una
 expresión matemática z=f(x,y), usando NumPy, SymPy y BMesh (eficiencia)"""
 #CUADRICULA = GRID
 
 def crear_superficie(expresion, x_dominio, y_dominio, resolucion):
-    # 1. Preparar función vectorizada
+    # 1. Preparar función vectorizada(numpy_evaluable)
     """Convierte la expresión simbólica expresion en una función NumPy-evaluable"""
     f = hacerfuncion_segura(expresion)
     
-    # 2. Crear grid 2D de puntos para las variables optimizado con NumPy
+    # 2. Crear grid 2D de coordenadas/optimizado con NumPy
     x = np.linspace(*x_dominio, resolucion)
     y = np.linspace(*y_dominio, resolucion)
     X, Y = np.meshgrid(x, y) #genera las coordenadas en forma matricial
@@ -26,28 +24,32 @@ def crear_superficie(expresion, x_dominio, y_dominio, resolucion):
     """Sistema de edición de mallas eficiente en Blender (ideal para geometrías dinámicas)
     Aquí se va a crear la geometría punto por punto y luego se armarán las caras"""
     bm = bmesh.new()
-    verts = bm.verts
+    verts = []
     
-    # Agregar vértices  en cada punto del grid 3D
+    # Crear vértices  en cada punto del grid 3D
     for j in range(resolucion):
         for i in range(resolucion):
-            verts.new((X[i,j], Y[i,j], Z[i,j]))
-    
+            v=bm.verts.new((X[i,j], Y[i,j], Z[i,j]))
+            verts.append(v)
+   
+    bm.verts.ensure_lookup_table() #EVITAR ERROR:Este error ocurre cuando se accede 
+                                #a los vértices de un objeto BMesh (como bm.verts[index]) sin haber actualizado la tabla interna de índices.
+
     # Crear caras: Une los vértices adyacentes para formar caras cuadradas/quads
     for j in range(resolucion-1):
         for i in range(resolucion-1):
             idx = j * resolucion + i
-    try:
-        bm.faces.new((
-            verts[idx], 
-            verts[idx+1], 
-            verts[idx+resolucion+1], 
-            verts[idx+resolucion]
-        ))
-    except ValueError:
-        pass  # cara ya creada o inválida
+            try:
+                bm.faces.new((
+                    verts[idx], 
+                    verts[idx+1], 
+                    verts[idx+resolucion+1], 
+                    verts[idx+resolucion]
+                ))
+            except ValueError:
+                pass  # cara ya creada se omite
 
-    # 4. Crear objeto que aparezca: Se crea un nuevo objeto malla/mesh
+    # 4. Crear objeto: Se crea un nuevo objeto malla/mesh
         # y se transfiere la geometría generada.
     malla = bpy.data.meshes.new(name=f"Superficie_{expresion}")
     bm.to_mesh(malla)
