@@ -25,7 +25,7 @@ def calcular_gradiente(expresion, punto):
         
         return (float(f_dx), float(f_dy))
     except (sp.SympifyError, TypeError):
-        print(f"Expresión inválida: {expresion} -> {e}")
+        print(f"Expresión inválida: {expresion}")
         return None
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 def vector_gradiente(funcion, dominio_x, dominio_y, resolucion=20):
