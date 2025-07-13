@@ -115,7 +115,7 @@ class CALCBLENDER_PT_IntegralPanel(bpy.types.Panel):
         grid.prop(props, "integral_y_min", text="y₁")
         grid.prop(props, "integral_y_max", text="y₂")
 
-        box.operator("calcblender.visualizar_integral", text="Calcular Integral", icon='CALC')
+        box.operator("calcblender.visualizar_integral", text="Calcular Integral", icon='AXIS_TOP')
 
         if props.integral_preview:
             box.label(text=props.integral_preview, icon='INFO')

@@ -26,3 +26,8 @@ class CB_OT_VisualizarIntegral(bpy.types.Operator):
         else:
             self.report({'ERROR'}, "Error al calcular la integral")
             return {'CANCELLED'}
+def register():
+    bpy.utils.register_class(CB_OT_VisualizarIntegral)
+
+def unregister():
+    bpy.utils.unregister_class(CB_OT_VisualizarIntegral)
