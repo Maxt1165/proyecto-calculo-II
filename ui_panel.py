@@ -117,7 +117,6 @@ class CALCBLENDER_PT_CurvasNivelPanel(bpy.types.Panel):
         
         # Propiedades: nivel z mínimo y máximo
         box.prop(props, "niveles_curvas", text="Niveles z (opcional)")
-        box.prop(props, "superficie_resolucion", text="Resolución")
         
         # Validación visual
         if not props.superficie_funcion.strip():
