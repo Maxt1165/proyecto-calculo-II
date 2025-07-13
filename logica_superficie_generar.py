@@ -29,8 +29,8 @@ def crear_superficie(expresion, x_dominio, y_dominio, resolucion):
     # Crear vértices  en cada punto del grid 3D
     for j in range(resolucion):
         for i in range(resolucion):
-            v=bm.verts.new((X[i,j], Y[i,j], Z[i,j]))
-            verts.append(v)
+            coord=(X[i,j], Y[i,j], Z[i,j])
+            verts.append(bm.verts.new(coord))
    
     bm.verts.ensure_lookup_table() #EVITAR ERROR:Este error ocurre cuando se accede 
                                 #a los vértices de un objeto BMesh (como bm.verts[index]) sin haber actualizado la tabla interna de índices.
@@ -60,6 +60,6 @@ def crear_superficie(expresion, x_dominio, y_dominio, resolucion):
     bpy.context.collection.objects.link(obj)
     
     # 5. Optimizar para viewport
-    malla.update(calc_edges=True)
+    malla.update()
     
     return obj

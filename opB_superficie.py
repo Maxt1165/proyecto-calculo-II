@@ -27,19 +27,22 @@ class CALCBLENDER_OT_CrearSuperficie(bpy.types.Operator):
     def execute(self, context):
         props = context.scene.calcblender_props  # Accede directamente a las propiedades del operador
 
+        if not props.superficie_funcion.strip():
+            self.report({'ERROR'}, "Debes ingresar una función z = f(x, y)")
+            return {'CANCELLED'}
+    
         try:
             obj = logica_superficie_generar.crear_superficie(
-            expresion=props.superficie_funcion,
-            x_dominio=(props.superficie_x_min, props.superficie_x_max),
-            y_dominio=(props.superficie_y_min, props.superficie_y_max),
-            resolucion=props.superficie_resolucion
-        )
+                expresion=props.superficie_funcion,
+                x_dominio=(props.superficie_x_min, props.superficie_x_max),
+                y_dominio=(props.superficie_y_min, props.superficie_y_max),
+                resolucion=props.superficie_resolucion
+            )
             obj.location = context.scene.cursor.location
             bpy.ops.object.select_all(action='DESELECT')
             context.view_layer.objects.active = obj
             obj.select_set(True)
             obj.modifiers.new(name="Suavizado", type='SMOOTH')
-            obj.data.use_auto_smooth = True
             obj["funcion"] = props.superficie_funcion  # importante para el gradiente
             self.report({'INFO'}, f"Superficie creada: {obj.name}")
             return {'FINISHED'}
