@@ -2,7 +2,6 @@ import bpy
 from bpy.types import Operator
 from . import logica_curvas_nivel  # Donde definiste las funciones de cálculo
 from math import floor, ceil
-from .logica_curvas_nivel import animar_curvas_a_plano
 
 #GENERADOR DE CURVAS DE NIVEL
 class CB_OT_CurvasNivel(Operator):
