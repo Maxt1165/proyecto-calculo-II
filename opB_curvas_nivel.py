@@ -1,8 +1,8 @@
 import bpy
-from .logica_curvas_nivel import animar_curvas_a_plano
 from bpy.types import Operator
 from . import logica_curvas_nivel  # Donde definiste las funciones de cálculo
 from math import floor, ceil
+from .logica_curvas_nivel import animar_curvas_a_plano
 
 #GENERADOR DE CURVAS DE NIVEL
 class CB_OT_CurvasNivel(Operator):
@@ -13,15 +13,10 @@ class CB_OT_CurvasNivel(Operator):
 
     @classmethod
     def poll(cls, context):
-        obj = context.active_object
-        return obj and "funcion" in obj
+        return context.scene and context.scene.calcblender_props.superficie_funcion.strip()
 
     def execute(self, context):
         props = context.scene.calcblender_props
-
-        if not props.superficie_funcion.strip():
-            self.report({'ERROR'}, "Debe ingresar una función z = f(x, y)")
-            return {'CANCELLED'}
 
         try:
             # Preparar niveles enteros dentro del rango visual
@@ -33,26 +28,33 @@ class CB_OT_CurvasNivel(Operator):
                 zmin = floor(props.superficie_z_min)
                 zmax = ceil(props.superficie_z_max)
                 niveles = list(range(zmin, zmax + 1))
-
-            curvas_dict = logica_curvas_nivel.obtener_curvas_de_nivel(
+            
+            if not niveles:
+                self.report({'ERROR'}, "No se definieron niveles de curva válidos.")
+                return {'CANCELLED'}
+                 # 2. Calcular curvas
+            
+            curvas_por_nivel = logica_curvas_nivel.obtener_curvas_de_nivel(
                 expr=props.superficie_funcion,
                 x_range=(props.superficie_x_min, props.superficie_x_max),
                 y_range=(props.superficie_y_min, props.superficie_y_max),
                 resolucion=props.superficie_resolucion,
                 niveles=niveles
             )
+             # 3. Crear curvas en Blender
+            total = 0
+            for z, segmentos in curvas_por_nivel.items():
+                altura = 0.0 if props.mostrar_curvas_z0 else z
+                objetos = logica_curvas_nivel.crear_curva_bezier(segmentos, altura, nombre_base="CurvaNivel")
+                total += len(objetos)
 
-            for z, lista_de_curvas in curvas_dict.items():
-                for curva in lista_de_curvas:
-                    altura = 0.0 if props.mostrar_curvas_z0 else z
-                    logica_curvas_nivel.crear_curva_bezier(curva, altura)
-            self.report({'INFO'}, f"Curvas de nivel creadas de z={zmin} a z={zmax}")
+            self.report({'INFO'}, f"{total} curvas creadas en niveles {niveles}")
             return {'FINISHED'}
-        
+
         except Exception as e:
             self.report({'ERROR'}, f"Error al generar curvas: {e}")
             return {'CANCELLED'}
-
+        
 def register():
     bpy.utils.register_class(CB_OT_CurvasNivel)
 

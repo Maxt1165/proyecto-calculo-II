@@ -1,5 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
 from .logica_soporte_matematica import hacerfuncion_segura
 import bpy
 import mathutils
@@ -23,72 +22,80 @@ def obtener_curvas_de_nivel(expr, x_range, y_range, resolucion, niveles):
     X, Y = np.meshgrid(x, y)
     Z = f(X, Y)
 
-    # Paso 3: Usar matplotlib para obtener contornos
     if not niveles:
         raise ValueError("La lista de niveles de curvas está vacía.")
-    
+    # Paso 3: Usar matplotlib para obtener contornos
     # Crear figura sin mostrarla (modo backend)
-    fig, ax = plt.subplots()
-    contornos = ax.contour(X, Y, Z, levels=niveles)
     
-    # Validar si se generaron curvas
-    if not contornos.collections or all(len(c.get_paths()) == 0 for c in contornos.collections):
-        plt.close(fig)
-        raise ValueError("No se generaron curvas de nivel con los parámetros dados. Verifique la función o el rango z.")
+    resultado = {nivel: [] for nivel in niveles}
+
+    for i in range(resolucion - 1):
+        for j in range(resolucion - 1):
+            # Puntos del cuadro
+            puntos = [
+                (x[j],     y[i],     Z[i][j]),     # A
+                (x[j+1],   y[i],     Z[i][j+1]),   # B
+                (x[j+1],   y[i+1],   Z[i+1][j+1]), # C
+                (x[j],     y[i+1],   Z[i+1][j])    # D
+            ]
     
-    # Extraer curvas por nivel
-    resultado = {}
-    for nivel, coleccion in zip(contornos.levels, contornos.collections):
-        curvas = []
-        for path in coleccion.get_paths():
-            vert = path.vertices  # Lista de (x, y)
-            if len(vert) >= 2:
-                curvas.append(vert.tolist())
-        resultado[nivel] = curvas
-    
-    if curvas:
-        resultado[nivel] = curvas
-    plt.close(fig)  # Cierra la figura para evitar consumir memoria
+            for nivel in niveles:
+                # Interpolar sobre los bordes si el nivel cruza entre dos valores
+                edges = []
+                for k, (p1, p2) in enumerate(zip(puntos, puntos[1:] + [puntos[0]])):
+                    z1, z2 = p1[2], p2[2]
+                    if (z1 - nivel) * (z2 - nivel) < 0:  # Cruce
+                        t = (nivel - z1) / (z2 - z1)
+                        x_interp = p1[0] + t * (p2[0] - p1[0])
+                        y_interp = p1[1] + t * (p2[1] - p1[1])
+                        edges.append((x_interp, y_interp))
+                if len(edges) == 2:
+                    resultado[nivel].append(edges)  # Línea entre dos puntos
     return resultado
 
-#Para cada curva obtenida desde matplotlib.contour, crearemos una curva de Bézier en Blender a la altura z = nivel
-def crear_curva_bezier(contorno, nivel_z, nombre="CurvaNivel"):
-    """Crea una curva Bézier en Blender desde una lista de puntos [(x, y), ...],
-    y la coloca en z = nivel_z."""
-    if not contorno or len(contorno) < 2:
-        print(f"Omitido: curva con menos de 2 puntos en nivel z={nivel_z}")
-        return None
+def crear_curva_bezier(contorno, nivel_z, nombre_base="CurvaNivel"):
+    """Crea curvas Bézier en Blender para una lista de segmentos [(x1, y1), (x2, y2)]
+    y los coloca a la altura z = nivel_z.
+    Args:
+        contorno (list): Lista de segmentos. Cada uno es una lista de dos puntos [(x1, y1), (x2, y2)]
+        nivel_z (float): Altura z para las curvas
+        nombre_base (str): Nombre base para los objetos creados
+    Returns:
+        list: Lista de objetos de curva creados"""
+    objetos_creados = []
 
-    # 1. Crear un nuevo objeto de tipo CURVE
-    curva_data = bpy.data.curves.new(name=nombre, type='CURVE')
-    curva_data.dimensions = '3D'
-    curva_data.resolution_u = 12  # Suavidad
-    
-    # Mejora de visibilidad en viewport
-    curva_data.bevel_depth = 0.02
-    curva_data.bevel_resolution = 3
+    for idx, segmento in enumerate(contorno):
+        if len(segmento) != 2:
+            print(f"[Advertencia] Segmento inválido en nivel {nivel_z}: {segmento}")
+            continue
 
-    # 2. Crear un spline Bézier
-    spline = curva_data.splines.new(type='BEZIER')
-    spline.bezier_points.add(len(contorno) - 1)  # Ya hay 1 por defecto
+        (x1, y1), (x2, y2) = segmento
 
-    for i, (x, y) in enumerate(contorno):
-        punto = spline.bezier_points[i]
-        punto.co = (x, y, nivel_z)  # Punto de control central
-        punto.handle_left_type = 'AUTO'
-        punto.handle_right_type = 'AUTO'
+        # Crear datos de curva
+        curva_data = bpy.data.curves.new(name=f"{nombre_base}_data_{idx}", type='CURVE')
+        curva_data.dimensions = '3D'
+        curva_data.resolution_u = 12
+        curva_data.bevel_depth = 0.02
+        curva_data.bevel_resolution = 3
 
-    # 3. Opcional: cerrar la curva si el primer y último punto son cercanos
-    if (mathutils.Vector(contorno[0]) - mathutils.Vector(contorno[-1])).length < 1e-2:
-        spline.use_cyclic_u = True
+        # Crear spline con 2 puntos Bézier
+        spline = curva_data.splines.new(type='BEZIER')
+        spline.bezier_points.add(1)
 
-    # 4. Eliminar objeto anterior si ya existe con ese nombre
-    nombre_objeto = f"{nombre}_z{nivel_z:.2f}"
-    if nombre_objeto in bpy.data.objects:
-        bpy.data.objects.remove(bpy.data.objects[nombre_objeto], do_unlink=True)
+        puntos = [(x1, y1), (x2, y2)]
+        for i, (x, y) in enumerate(puntos):
+            p = spline.bezier_points[i]
+            p.co = (x, y, nivel_z)
+            p.handle_left_type = 'AUTO'
+            p.handle_right_type = 'AUTO'
 
-    # 5. Crear objeto y vincularlo a la escena
-    curva_obj = bpy.data.objects.new(nombre_objeto, curva_data)
-    bpy.context.collection.objects.link(curva_obj)
-    return curva_obj
- 
+        # Nombre único por segmento
+        nombre_obj = f"{nombre_base}_z{nivel_z:.2f}_s{idx}"
+        if nombre_obj in bpy.data.objects:
+            bpy.data.objects.remove(bpy.data.objects[nombre_obj], do_unlink=True)
+
+        curva_obj = bpy.data.objects.new(nombre_obj, curva_data)
+        bpy.context.collection.objects.link(curva_obj)
+        objetos_creados.append(curva_obj)
+
+    return objetos_creados
