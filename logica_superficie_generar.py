@@ -60,7 +60,6 @@ def crear_superficie(expresion, x_dominio, y_dominio, resolucion):
     bpy.context.collection.objects.link(obj)
     
     # 5. Optimizar para viewport
-    malla.update() #asegura que la geometría esté lista para el renderizado.
-    malla.calc_normals() #mejora la iluminación y sombreado de la superficie.
+    malla.update(calc_edges=True)
     
     return obj
