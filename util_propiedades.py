@@ -20,7 +20,7 @@ class CalcBlenderProperties(bpy.types.PropertyGroup ):
     function_preview : bpy.props.StringProperty(name="Vista previa", default="")
     gradiente_preview : bpy.props.StringProperty(name="∇f",default="",description="Vp: gradiente calculado")
     plano_tangente_preview: bpy.props.StringProperty(name="Plano Tangente", default="", description="Vp: ecuación del plano tangente")
-    niveles_curvas : bpy.props.StringProperty(name="Niveles_z", description="Lista separada por comas (ej: 0, 1.5, 3)",default="",)
+    niveles_curvas : bpy.props.StringProperty(name="Niveles Maximos z", description="Lista separada por comas (ej: 0, 1.5, 3)",default="",)
     mostrar_curvas_z0: bpy.props.BoolProperty(name="Proyectar en z=0",description="Si está activo, las curvas de nivel se mostrarán en z=0",default=False)
     
     integral_preview: bpy.props.StringProperty(name="Resultado", default="", description="Resultado de la integral doble")

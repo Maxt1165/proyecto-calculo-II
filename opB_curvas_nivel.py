@@ -20,8 +20,12 @@ class CB_OT_CurvasNivel(bpy.types.Operator):
         try:
             # Preparar niveles enteros dentro del rango visual
             if props.niveles_curvas.strip():
-                # Si el usuario escribió niveles manuales, usarlos
-                niveles = [float(n.strip()) for n in props.niveles_curvas.split(",") if n.strip()]
+                texto = props.niveles_curvas.strip()
+                if texto.replace('.', '', 1).isdigit():  # Solo un número
+                    max_nivel = int(float(texto))
+                    niveles = list(range(0, max_nivel + 1))
+                else:
+                    niveles = [float(n.strip()) for n in texto.split(",") if n.strip()]
             else:
                 # Si no escribió nada, usar niveles automáticos desde z_min hasta z_max
                 zmin = floor(props.superficie_z_min)
@@ -31,8 +35,7 @@ class CB_OT_CurvasNivel(bpy.types.Operator):
             if not niveles:
                 self.report({'ERROR'}, "No se definieron niveles de curva válidos.")
                 return {'CANCELLED'}
-                 # 2. Calcular curvas
-            
+            # 2. Calcular curvas
             curvas_por_nivel = logica_curvas_nivel.obtener_curvas_de_nivel(
                 expr=props.superficie_funcion,
                 x_range=(props.superficie_x_min, props.superficie_x_max),
@@ -40,13 +43,12 @@ class CB_OT_CurvasNivel(bpy.types.Operator):
                 resolucion=props.superficie_resolucion,
                 niveles=niveles
             )
-             # 3. Crear curvas en Blender
+            #3. Crear curvas en Blender
             total = 0
             for z, segmentos in curvas_por_nivel.items():
                 altura = 0.0 if props.mostrar_curvas_z0 else z
                 objetos = logica_curvas_nivel.crear_curva_bezier(segmentos, altura, nombre_base=f"CurvaNivel_z{z:.2f}")
                 total += len(objetos)
-
             self.report({'INFO'}, f"{total} curvas creadas en niveles {niveles}")
             return {'FINISHED'}
 
