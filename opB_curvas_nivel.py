@@ -42,10 +42,14 @@ class CB_OT_CurvasNivel(bpy.types.Operator):
             )
              # 3. Crear curvas en Blender
             total = 0
+            total = 0
             for z, segmentos in curvas_por_nivel.items():
                 altura = 0.0 if props.mostrar_curvas_z0 else z
-                objetos = logica_curvas_nivel.crear_curva_bezier(segmentos, altura, nombre_base="CurvaNivel")
-                total += len(objetos)
+                for i, segmento in enumerate(segmentos):
+                    nombre = f"CurvaNivel_z{z:.2f}_{i}"
+                    curva_obj = logica_curvas_nivel.crear_curva_bezier(segmento, altura, nombre=nombre)
+                    if curva_obj:
+                        total += 1
 
             self.report({'INFO'}, f"{total} curvas creadas en niveles {niveles}")
             return {'FINISHED'}

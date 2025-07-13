@@ -94,6 +94,8 @@ def crear_curva_bezier(contorno, nivel_z, nombre_base="CurvaNivel"):
 
         curva_obj = bpy.data.objects.new(nombre_obj, curva_data)
         bpy.context.collection.objects.link(curva_obj)
+        #Esto asegura que cada objeto tenga el material antes de ser retornado.
+        curva_obj.data.materials.append(bpy.data.materials.get("CurvasMaterial") or bpy.data.materials.new("CurvasMaterial"))
         objetos_creados.append(curva_obj)
-
+        
     return objetos_creados
