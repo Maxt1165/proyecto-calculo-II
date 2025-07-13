@@ -1,6 +1,7 @@
 import numpy as np
 from .logica_soporte_matematica import hacerfuncion_segura
 import bpy
+import mathutils
 
 def obtener_curvas_de_nivel(expr, x_range, y_range, resolucion, niveles):
     """ Evalúa la función z = f(x, y) y devuelve las curvas de nivel como listas de puntos (por nivel).
@@ -23,9 +24,7 @@ def obtener_curvas_de_nivel(expr, x_range, y_range, resolucion, niveles):
 
     if not niveles:
         raise ValueError("La lista de niveles de curvas está vacía.")
-    # Paso 3: Usar matplotlib para obtener contornos
-    # Crear figura sin mostrarla (modo backend)
-    
+
     resultado = {nivel: [] for nivel in niveles}
 
     for i in range(resolucion - 1):
