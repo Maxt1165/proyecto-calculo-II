@@ -13,7 +13,6 @@ print("Se importó bpy en el archivo __init__.py")
 
 # ESTO ACTUALIZARÁ LOS MÓDULOS (ARCHIVOS) CADA QUE SE RECARGUE ESTE __init__.py
 import importlib
-from . import ui_panel
 from . import util_propiedades
 
 from . import logica_superficie_generar
@@ -25,10 +24,12 @@ from . import opB_pgradiente
 
 from . import opB_ptangente
 
-_modules = [ui_panel, util_propiedades, 
+from . import ui_panel
+
+_modules = [ util_propiedades, 
             logica_superficie_generar, logica_soporte_matematica, opB_superficie,
             logica_gradiente_calculo, opB_pgradiente,
-            opB_ptangente]  # AQUI SE AÑADIRAN LOS MODULOS A DESARROLLAR
+            opB_ptangente, ui_panel]  # AQUI SE AÑADIRAN LOS MODULOS A DESARROLLAR
 
 def _reload_modules():
     for m in _modules:

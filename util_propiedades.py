@@ -1,7 +1,7 @@
 import bpy
 
 class CalcBlenderProperties(bpy.types.PropertyGroup):
-    superficie_funcion = bpy.props.StringProperty(name="Función z =",description="Expresión matemática z=f(x,y)")
+    superficie_funcion =  bpy.props.StringProperty(name="Función z =",description="Expresión matemática z=f(x,y)")
     superficie_x_min = bpy.props.FloatProperty(name="X Min", default=-5.0)
     superficie_x_max = bpy.props.FloatProperty(name="X Max", default=5.0)
     superficie_y_min = bpy.props.FloatProperty(name="Y Min", default=-5.0)
