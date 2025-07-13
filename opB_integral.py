@@ -1,6 +1,5 @@
 import bpy
 from . import logica_integral_calculo
-
 class CB_OT_VisualizarIntegral(bpy.types.Operator):
     bl_idname = "calcblender.visualizar_integral"
     bl_label = "Calcular Integral Definida"
@@ -22,6 +21,7 @@ class CB_OT_VisualizarIntegral(bpy.types.Operator):
         if resultado is not None:
             props.integral_preview = f"∬_D f(x,y) dxdy ≈ {resultado:.4f}"
             self.report({'INFO'}, "Integral calculada con éxito")
+            logica_integral_calculo.crear_prisma_integral(expr, (a, b), (c, d), props.superficie_resolucion)
             return {'FINISHED'}
         else:
             self.report({'ERROR'}, "Error al calcular la integral")
