@@ -80,6 +80,11 @@ class CALCBLENDER_PT_GradientePanel(bpy.types.Panel):
             box.operator("calcblender.plano_tangente", text="Mostrar Plano Tangente", icon='MESH_PLANE')
         else:
             box.label(text="Seleccione una superficie válida", icon='ERROR')
+            
+        if props.gradiente_preview:
+            box.separator()
+            box.label(text=props.gradiente_preview, icon='INFO')
+
 
 classes = (
     CALCBLENDER_PT_SurfacePanel,

@@ -50,7 +50,9 @@ class CB_OT_VisualizarGradiente(bpy.types.Operator):
             cono.rotation_euler = rotacion
 
         self.report({'INFO'}, f"Gradiente en ({punto[0]}, {punto[1]}) = {grad}")
+        props.gradiente_preview = f"∇f({punto[0]:.2f}, {punto[1]:.2f}) = ({grad[0]:.3f}, {grad[1]:.3f})"
         return {'FINISHED'} 
+    
 
 def register():
     bpy.utils.register_class(CB_OT_VisualizarGradiente)

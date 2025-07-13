@@ -10,14 +10,10 @@ class CalcBlenderProperties(bpy.types.PropertyGroup ):
 
     punto_gradiente_x : bpy.props.FloatProperty(name="X₀", description="Punto X donde evaluar el gradiente", default=0.0)
     punto_gradiente_y : bpy.props.FloatProperty(name="Y₀", description="Punto Y donde evaluar el gradiente", default=0.0)
-
-
-    function_preview : bpy.props.StringProperty(
-        name="Vista previa", 
-        #description="Vista previa de la función validada",
-        default="",
-        #options={'HIDDEN'}
-    )
+    
+    #description="Vista previa de la función validada",
+    function_preview : bpy.props.StringProperty(name="Vista previa", default="")
+    gradiente_preview : bpy.props.StringProperty(name="∇f",default="",description="Vista previa del gradiente calculado")
 
 # Registro mejorado con manejo de errores
 def register():
