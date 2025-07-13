@@ -20,6 +20,7 @@ class CalcBlenderProperties(bpy.types.PropertyGroup ):
     function_preview : bpy.props.StringProperty(name="Vista previa", default="")
     gradiente_preview : bpy.props.StringProperty(name="∇f",default="",description="Vp: gradiente calculado")
     plano_tangente_preview: bpy.props.StringProperty(name="Plano Tangente", default="", description="Vp: ecuación del plano tangente")
+    niveles_curvas : StringProperty(name="Niveles z", description="Lista separada por comas (ej: 0, 1.5, 3)",default="",)
     integral_preview: bpy.props.StringProperty(name="Resultado", default="", description="Resultado de la integral doble")
 
 # Registro mejorado con manejo de errores

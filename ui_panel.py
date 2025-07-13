@@ -55,7 +55,7 @@ class CALCBLENDER_PT_SurfacePanel(bpy.types.Panel):
             box.label(text=f"Función válida: {props.function_preview}", icon='CON_TRANSFORM')
 
 
-#Subpanel para visualización de gradientes
+#Subpanel para visualización de gradientes y planos tangentes
 class CALCBLENDER_PT_GradientePanel(bpy.types.Panel):
     bl_label      = "Gradientes"
     bl_idname     = "CALCBLENDER_PT_GradientePanel"
@@ -93,6 +93,33 @@ class CALCBLENDER_PT_GradientePanel(bpy.types.Panel):
             box.label(text="Plano tangente:", icon='MESH_PLANE')
             box.label(text=props.plano_tangente_preview)
 
+#subPanel para curvas de nivel
+class CALCBLENDER_PT_CurvasNivelPanel(bpy.types.Panel):
+    bl_label = "Curvas de Nivel"
+    bl_idname = "CALCBLENDER_PT_CurvasNivelPanel"
+    bl_parent_id = "CALCBLENDER_PT_SurfacePanel"
+    bl_space_type = 'VIEW_3D'
+    bl_region_type = 'UI'
+    bl_options = {'DEFAULT_CLOSED'}
+
+    def draw(self, context):
+        layout = self.layout
+        props = context.scene.calcblender_props
+
+        box = layout.box()
+        box.label(text="Curvas de Nivel", icon="RNDCURVE")
+
+        # Propiedades: nivel z mínimo y máximo
+        row = box.row(align=True)
+        box.prop(props, "niveles_curvas", text="Niveles z (opcional)")
+        box.prop(props, "resolucion_nivel", text="Resolución")
+        
+        # Botón para generar curvas de nivel
+        box.operator("calcblender.generar_curvas_nivel", text="Generar Curvas", icon="OUTLINER_OB_CURVE")
+        # Botón para animarlas a z=0
+        box.operator("calcblender.animar_curvas_nivel", text="Animar Curvas a Z=0", icon="PLAY")
+
+
 class CALCBLENDER_PT_IntegralPanel(bpy.types.Panel):
     bl_label = "Integrales Dobles"
     bl_idname = "CALCBLENDER_PT_IntegralPanel"
@@ -120,10 +147,10 @@ class CALCBLENDER_PT_IntegralPanel(bpy.types.Panel):
         if props.integral_preview:
             box.label(text=props.integral_preview, icon='INFO')
 
-
 classes = (
     CALCBLENDER_PT_SurfacePanel,
     CALCBLENDER_PT_GradientePanel,
+    CALCBLENDER_PT_CurvasNivelPanel,
     CALCBLENDER_PT_IntegralPanel
 )
 
