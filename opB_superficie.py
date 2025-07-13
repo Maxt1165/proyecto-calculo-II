@@ -26,6 +26,7 @@ class CALCBLENDER_OT_CrearSuperficie(bpy.types.Operator):
     desde Blender para usarlas en cálculos"""
     def execute(self, context):
         props = context.scene.calcblender_props  # Accede directamente a las propiedades del operador
+
         try:
             obj = logica_superficie_generar.crear_superficie(
             expresion=props.superficie_funcion,
@@ -39,7 +40,7 @@ class CALCBLENDER_OT_CrearSuperficie(bpy.types.Operator):
             obj.select_set(True)
             obj.modifiers.new(name="Suavizado", type='SMOOTH')
             obj.data.use_auto_smooth = True
-            obj["funcion"] = self.superficie_funcion  # importante para el gradiente
+            obj["funcion"] = props.superficie_funcion  # importante para el gradiente
             self.report({'INFO'}, f"Superficie creada: {obj.name}")
             return {'FINISHED'}
         except Exception as e:
