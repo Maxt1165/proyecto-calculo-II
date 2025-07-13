@@ -66,8 +66,10 @@ class CB_OT_Planotangente(bpy.types.Operator):
         context.collection.objects.link(obj)
 
         # Mostrar la función del plano tangente como mensaje
-        ecuacion_plano = f"z = {z0:.3f} + ({fx:.3f})(x - {x0:.3f}) + ({fy:.3f})(y - {y0:.3f})"
-        self.report({'INFO'}, f"Plano tangente {ecuacion_plano} generado en ({x0}, {y0}, {z0})")
+
+        context.scene.calcblender_props.plano_tangente_preview = (
+            f"z = {z0:.3f} + {fx:.3f}(x - {x0}) + {fy:.3f}(y - {y0})")
+        self.report({'INFO'}, f"Plano tangente generado en ({x0}, {y0}, {z0})")
         return {'FINISHED'}
 
 def register():

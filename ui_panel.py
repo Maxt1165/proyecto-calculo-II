@@ -87,6 +87,12 @@ class CALCBLENDER_PT_GradientePanel(bpy.types.Panel):
         if props.gradiente_preview:
             box.separator()
             box.label(text=props.gradiente_preview, icon='INFO')
+            
+        if props.plano_tangente_preview:
+            box.separator()
+            box.label(text="Plano tangente:", icon='MESH_PLANE')
+            box.label(text=props.plano_tangente_preview)
+
 
 
 classes = (

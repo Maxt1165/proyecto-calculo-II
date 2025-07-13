@@ -13,8 +13,8 @@ class CalcBlenderProperties(bpy.types.PropertyGroup ):
     
     #description="Vista previa de la función validada",
     function_preview : bpy.props.StringProperty(name="Vista previa", default="")
-    gradiente_preview : bpy.props.StringProperty(name="∇f",default="",description="Vista previa del gradiente calculado")
-
+    gradiente_preview : bpy.props.StringProperty(name="∇f",default="",description="Vp: gradiente calculado")
+    plano_tangente_preview: bpy.props.StringProperty(name="Plano Tangente", default="", description="Vp: ecuación del plano tangente")
 # Registro mejorado con manejo de errores
 def register():
     try:
