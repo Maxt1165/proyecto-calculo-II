@@ -49,21 +49,10 @@ class CB_OT_Planotangente(bpy.types.Operator):
         offset = [(-tamaño, -tamaño), (tamaño, -tamaño), (tamaño, tamaño), (-tamaño, tamaño)]
         vertices = []
         for dx, dy in offset:
-            x = x0 + dx
+            x = x0 + dx #dx = x- x0
             y = y0 + dy
             z = z0 + fx * dx + fy * dy
             vertices.append((x, y, z))
-
-        """   
-        # Generar los 4 vértices del plano tangente usando la fórmula 
-        # z = z₀ + fx(x - x₀) + fy(y - y₀)
-
-        vertices = []
-        for dx, dy in [(-1, -1), (1, -1), (1, 1), (-1, 1)]:
-            x = x0 + dx * tamaño
-            y = y0 + dy * tamaño
-            z = z0 + fx * (x - x0) + fy * (y - y0)
-            vertices.append((x, y, z))"""
 
         # Crear mesh y objeto
         mesh = bpy.data.meshes.new("PlanoTangente")

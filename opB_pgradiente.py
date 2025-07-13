@@ -37,7 +37,7 @@ class CB_OT_VisualizarGradiente(bpy.types.Operator):
             return {'CANCELLED'}
         
         # Crear el cono como vector gradiente  normal
-        bpy.ops.mesh.primitive_cone_add(vertices=16, radius1=0.1, depth=0.4) 
+        bpy.ops.mesh.primitive_cone_add(vertices=16, radius1=0.4, depth=1.6) 
         cono = context.active_object
         cono.name = f"Gradiente_{punto[0]:.2f}_{punto[1]:.2f}"
         cono.location=(punto[0], punto[1], z) #posicionamiento en la superficie
