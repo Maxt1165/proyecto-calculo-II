@@ -29,9 +29,6 @@ class CB_OT_VisualizarGradiente(bpy.types.Operator):
             self.report({'ERROR'}, "No se pudo calcular el gradiente o es nulo")
             return {'CANCELLED'}
 #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 
-        escala = 0.5  # puedes ajustar esta escala para que el cono no sea muy largo
-        vector = (grad[0] * escala, grad[1] * escala, 0)
-        
         # Calcular z = f(x, y)
         try:
             z = eval(funcion, {}, {'x': punto[0], 'y': punto[1]})
@@ -39,13 +36,14 @@ class CB_OT_VisualizarGradiente(bpy.types.Operator):
             self.report({'ERROR'}, f"No se pudo evaluar z en el punto: {e}")
             return {'CANCELLED'}
         
-        # Crear el cono como vector gradiente
-        bpy.ops.mesh.primitive_cone_add(vertices=16, radius1=0.1, depth=0.4,    location=(punto[0], punto[1], z))
+        # Crear el cono como vector gradiente  normal
+        bpy.ops.mesh.primitive_cone_add(vertices=16, radius1=0.1, depth=0.4) 
         cono = context.active_object
         cono.name = f"Gradiente_{punto[0]:.2f}_{punto[1]:.2f}"
-       
-        # Rotar el cono en dirección del vector gradiente
-        direccion = mathutils.Vector(vector)
+        cono.location=(punto[0], punto[1], z) #posicionamiento en la superficie
+
+        # Construimos el vector normal: (∂f/∂x, ∂f/∂y, -1)
+        direccion = mathutils.Vector((grad[0], grad[1], -1))
         if direccion.length > 0:
             direccion.normalize()
             rotacion = direccion.to_track_quat('Z', 'Y').to_euler()
