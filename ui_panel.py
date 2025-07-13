@@ -109,21 +109,24 @@ class CALCBLENDER_PT_CurvasNivelPanel(bpy.types.Panel):
         box = layout.box()
         box.label(text="Curvas de Nivel", icon="RNDCURVE")
 
+        # Campo: función z = f(x, y)
+        if not props.superficie_funcion.strip():
+            box.label(text="⚠ Ingrese una función válida", icon="ERROR")
+        else:
+            box.label(text=f"f(x,y) = {props.superficie_funcion.strip()}", icon="INFO")
+        
         # Propiedades: nivel z mínimo y máximo
-        row = box.row(align=True)
         box.prop(props, "niveles_curvas", text="Niveles z (opcional)")
         box.prop(props, "superficie_resolucion", text="Resolución")
         
         # Validación visual
         if not props.superficie_funcion.strip():
             box.label(text="Ingrese una función válida", icon="ERROR")
-
+        # Botón para mostrarlas en z=0
+        box.prop(props, "mostrar_curvas_z0",text="Proyectar en z = 0")
         # Botón para generar curvas de nivel
         box.operator("calcblender.curvas_nivel", text="Generar Curvas", icon="OUTLINER_OB_CURVE")
-        # Botón para mostrarlas en z=0
-        box.prop(props, "mostrar_curvas_z0")
-
-
+        
 class CALCBLENDER_PT_IntegralPanel(bpy.types.Panel):
     bl_label = "Integrales Dobles"
     bl_idname = "CALCBLENDER_PT_IntegralPanel"
