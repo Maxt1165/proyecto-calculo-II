@@ -14,7 +14,6 @@ def calcular_gradiente(expresion, punto):
     x, y = sp.symbols('x y')
     try:
         expr = sp.sympify(expresion)
-        
     
         # 2. Calcular derivadas parciales
         df_dx = sp.diff(expr, x)
@@ -26,10 +25,9 @@ def calcular_gradiente(expresion, punto):
         
         return (float(f_dx), float(f_dy))
     except (sp.SympifyError, TypeError):
-        print(f"Expresión inválida: {expresion}")
-    return (0.0, 0.0)
-
-
+        print(f"Expresión inválida: {expresion} -> {e}")
+        return None
+#<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 def vector_gradiente(funcion, dominio_x, dominio_y, resolucion=20):
     """
     Genera un campo vectorial del gradiente para visualización 
