@@ -6,8 +6,6 @@ class CalcBlenderProperties(bpy.types.PropertyGroup ):
     superficie_x_max : bpy.props.FloatProperty(name="X Max", default=5.0)
     superficie_y_min : bpy.props.FloatProperty(name="Y Min", default=-5.0)
     superficie_y_max : bpy.props.FloatProperty(name="Y Max", default=5.0)
-    superficie_z_min : bpy.props.FloatProperty(name="Z Min", default=0.0)
-    superficie_z_max : bpy.props.FloatProperty(name="Z Max", default=5.0)
     superficie_resolucion : bpy.props.IntProperty(name="Resolución",    description="Cantidad de subdivisiones",default=20, min=3, max=100)# type: ignore
 
     punto_gradiente_x : bpy.props.FloatProperty(name="X₀", description="Punto X donde evaluar el gradiente", default=0.0)

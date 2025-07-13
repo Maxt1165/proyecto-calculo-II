@@ -37,7 +37,6 @@ class CALCBLENDER_OT_CrearSuperficie(bpy.types.Operator):
                 x_dominio=(props.superficie_x_min, props.superficie_x_max),
                 y_dominio=(props.superficie_y_min, props.superficie_y_max),
                 resolucion=props.superficie_resolucion,
-                props=props  # configurar rango visual z
             )
             obj.location = context.scene.cursor.location
             bpy.ops.object.select_all(action='DESELECT')
