@@ -50,6 +50,11 @@ def crear_curva_bezier(contorno, nivel_z, nombre="CurvaNivel"):
     curva_data = bpy.data.curves.new(name=nombre, type='CURVE')
     curva_data.dimensions = '3D'
     curva_data.resolution_u = 12  # Suavidad
+    
+    # Mejora de visibilidad en viewport
+    curva_data.bevel_depth = 0.02
+    curva_data.bevel_resolution = 3
+
 
     # 2. Crear un spline Bézier
     spline = curva_data.splines.new(type='BEZIER')
@@ -66,8 +71,14 @@ def crear_curva_bezier(contorno, nivel_z, nombre="CurvaNivel"):
         spline.use_cyclic_u = True
 
     # 4. Crear el objeto en la escena
-    curva_obj = bpy.data.objects.new(f"{nombre}_z{nivel_z:.1f}", curva_data)
+    nombre_objeto = f"{nombre}_z{nivel_z:.1f}"
+    
+    # Eliminar objeto previo con mismo nombre (si existe)
+    if nombre_objeto in bpy.data.objects:
+        bpy.data.objects.remove(bpy.data.objects[nombre_objeto], do_unlink=True)
+    curva_obj = bpy.data.objects.new(nombre_objeto, curva_data)
     bpy.context.collection.objects.link(curva_obj)
+    
     return curva_obj
 
 def animar_curvas_a_plano(objetos_curvas, frame_inicio=1, duracion=20):

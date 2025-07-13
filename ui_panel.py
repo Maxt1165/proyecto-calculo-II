@@ -112,10 +112,14 @@ class CALCBLENDER_PT_CurvasNivelPanel(bpy.types.Panel):
         # Propiedades: nivel z mínimo y máximo
         row = box.row(align=True)
         box.prop(props, "niveles_curvas", text="Niveles z (opcional)")
-        box.prop(props, "resolucion_nivel", text="Resolución")
+        box.prop(props, "superficie_resolucion", text="Resolución")
         
+        # Validación visual
+        if not props.superficie_funcion.strip():
+            box.label(text="Ingrese una función válida", icon="ERROR")
+
         # Botón para generar curvas de nivel
-        box.operator("calcblender.generar_curvas_nivel", text="Generar Curvas", icon="OUTLINER_OB_CURVE")
+        box.operator("calcblender.curvas_nivel", text="Generar Curvas", icon="OUTLINER_OB_CURVE")
         # Botón para animarlas a z=0
         box.operator("calcblender.animar_curvas_nivel", text="Animar Curvas a Z=0", icon="PLAY")
 
