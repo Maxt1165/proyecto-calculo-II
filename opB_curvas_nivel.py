@@ -1,10 +1,10 @@
 import bpy
-from bpy.types import Operator
 from . import logica_curvas_nivel  # Donde definiste las funciones de cálculo
 from math import floor, ceil
 
+
 #GENERADOR DE CURVAS DE NIVEL
-class CB_OT_CurvasNivel(Operator):
+class CB_OT_CurvasNivel(bpy.types.Operator):
     bl_idname = "calcblender.curvas_nivel"
     bl_label = "Generar Curvas de Nivel"
     bl_description = "Crea curvas de nivel para z = c en la superficie seleccionada"
