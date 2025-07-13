@@ -24,7 +24,7 @@ from . import opB_pgradiente
 from . import opB_ptangente
 
 from . import logica_curvas_nivel
-from . import op_curvas_nivel
+from . import opB_curvas_nivel
 
 from . import logica_integral_calculo
 from . import opB_integral
@@ -34,8 +34,9 @@ from . import ui_panel
 _modules = [ util_propiedades, 
             logica_superficie_generar, logica_soporte_matematica, opB_superficie,
             logica_gradiente_calculo, opB_pgradiente, opB_ptangente, 
-            logica_curvas_nivel, op_curvas_nivel,
-            logica_integral_calculo, opB_integral, ui_panel]  # AQUI SE AÑADIRAN LOS MODULOS A DESARROLLAR
+            logica_curvas_nivel, opB_curvas_nivel,
+            logica_integral_calculo, opB_integral,
+            ui_panel]  # AQUI SE AÑADIRAN LOS MODULOS A DESARROLLAR
 
 def _reload_modules():
     for m in _modules:
