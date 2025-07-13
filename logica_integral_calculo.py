@@ -17,7 +17,7 @@ def calcular_integral_definida(expr_str, a, b, c, d):
         print(f"[ERROR] No se pudo calcular la integral: {e}")
         return None
     
-def crear_prisma_integral(expr, x_dominio, y_dominio, resolucion_sup=20, resolucion_lados=6):
+def crear_prisma_integral(expr, x_dominio, y_dominio, resolucion_sup, resolucion_lados=6):
     f = hacerfuncion_segura(expr)
 
     # Malla superior
