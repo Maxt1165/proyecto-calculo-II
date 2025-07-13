@@ -11,10 +11,17 @@ class CalcBlenderProperties(bpy.types.PropertyGroup ):
     punto_gradiente_x : bpy.props.FloatProperty(name="X₀", description="Punto X donde evaluar el gradiente", default=0.0)
     punto_gradiente_y : bpy.props.FloatProperty(name="Y₀", description="Punto Y donde evaluar el gradiente", default=0.0)
     
-    #description="Vista previa de la función validada",
+    integral_x_min: bpy.props.FloatProperty(name="x min", default=0.0)
+    integral_x_max: bpy.props.FloatProperty(name="x max", default=1.0)
+    integral_y_min: bpy.props.FloatProperty(name="y min", default=0.0)
+    integral_y_max: bpy.props.FloatProperty(name="y max", default=1.0)
+    
+    #FUNCIONES DE VISUALIZACIÓN DE VALORES
     function_preview : bpy.props.StringProperty(name="Vista previa", default="")
     gradiente_preview : bpy.props.StringProperty(name="∇f",default="",description="Vp: gradiente calculado")
     plano_tangente_preview: bpy.props.StringProperty(name="Plano Tangente", default="", description="Vp: ecuación del plano tangente")
+    integral_preview: bpy.props.StringProperty(name="Resultado", default="", description="Resultado de la integral doble")
+
 # Registro mejorado con manejo de errores
 def register():
     try:
