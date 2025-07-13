@@ -8,6 +8,10 @@ class CalcBlenderProperties(bpy.types.PropertyGroup ):
     superficie_y_max : bpy.props.FloatProperty(name="Y Max", default=5.0)
     superficie_resolucion : bpy.props.IntProperty(name="Resolución",    description="Cantidad de subdivisiones",default=20, min=3, max=100)# type: ignore
 
+    gradiente_x : bpy.props.FloatProperty(name="X₀", description="Punto X donde evaluar el gradiente", default=0.0)
+    gradiente_y : bpy.props.FloatProperty(name="Y₀", description="Punto Y donde evaluar el gradiente", default=0.0)
+
+
     function_preview : bpy.props.StringProperty(
         name="Vista previa", 
         #description="Vista previa de la función validada",

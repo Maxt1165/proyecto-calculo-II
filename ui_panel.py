@@ -52,7 +52,6 @@ class CALCBLENDER_PT_SurfacePanel(bpy.types.Panel):
         if props.function_preview:
             box.label(text=f"Función válida: {props.function_preview}", icon='CON_TRANSFORM')
 
-
 # Subpanel para visualización de gradientes
 class CALCBLENDER_PT_GradientePanel(bpy.types.Panel):
     bl_label      = "Gradientes"
@@ -69,14 +68,20 @@ class CALCBLENDER_PT_GradientePanel(bpy.types.Panel):
 
         box = layout.box()
         box.label(text="Visualizar campo ∇f", icon='FORCE_MAGNETIC')
-
+        
         if obj and "funcion" in obj:
             row = box.row()
-            row.prop(props, "superficie_resolucion", text="Resolución")
             op = box.operator("calcblender.visualizar_gradiente", text="Generar Gradiente")
-            op.resolucion = props.superficie_resolucion
         else:
             box.label(text="Seleccione una superficie válida", icon='ERROR')
+        
+        box.separador()
+        box.label(text="Evaluar ∇f en punto (x₀, y₀)", icon='MESH_CONE')
+        row = box.row(align=True)
+        row.prop(props, "gradiente_x", text="x₀")
+        row.prop(props, "gradiente_y", text="y₀")
+
+        box.operator("calcblender.gradiente_punto", text="Mostrar ∇f en (x₀,y₀)", icon='OUTLINER_OB_CONE')
 
 
 classes = (

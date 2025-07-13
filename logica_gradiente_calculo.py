@@ -37,8 +37,7 @@ def vector_gradiente(funcion, dominio_x, dominio_y, resolucion=20):
         funcion (str): Función matemática
         dominio_x (tuple): Rango en X (min, max)
         dominio_y (tuple): Rango en Y (min, max)
-        resolucion (int): Puntos por eje
-        
+        resolucion (int): Puntos por eje   
     Returns:
         list: Vectores en formato [(origen, vector), ...]
     """
@@ -55,6 +54,5 @@ def vector_gradiente(funcion, dominio_x, dominio_y, resolucion=20):
             # Escalar vector para mejor visualización
             escala = 0.3
             vector_esc = (grad[0]*escala, grad[1]*escala, 0)
-            vectores.append(((X[i,j], Y[i,j], 0), vector_esc))
-            
+            vectores.append(((X[i,j], Y[i,j], 0), vector_esc))    
     return vectores
