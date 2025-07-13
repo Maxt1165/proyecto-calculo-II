@@ -41,11 +41,9 @@ class CB_OT_Planotangente(bpy.types.Operator):
 
         fx, fy = grad
 
-        # Generar plano tangente con fórmula:
-        # z = z0 + fx*(x - x0) + fy*(y - y0)
-
+    # Generar plano tangente con fórmula:
+        #z = z0 + fx*(x - x0) + fy*(y - y0)
         tamaño = 1  # lado del plano tangente
-        
         offset = [(-tamaño, -tamaño), (tamaño, -tamaño), (tamaño, tamaño), (-tamaño, tamaño)]
         vertices = []
         for dx, dy in offset:
@@ -67,7 +65,9 @@ class CB_OT_Planotangente(bpy.types.Operator):
         obj = bpy.data.objects.new("PlanoTangente", mesh)
         context.collection.objects.link(obj)
 
-        self.report({'INFO'}, f"Plano tangente generado en ({x0}, {y0}, {z0})")
+        # Mostrar la función del plano tangente como mensaje
+        ecuacion_plano = f"z = {z0:.3f} + ({fx:.3f})(x - {x0:.3f}) + ({fy:.3f})(y - {y0:.3f})"
+        self.report({'INFO'}, f"Plano tangente {ecuacion_plano} generado en ({x0}, {y0}, {z0})")
         return {'FINISHED'}
 
 def register():
