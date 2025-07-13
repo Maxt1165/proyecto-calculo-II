@@ -13,7 +13,7 @@ print("Se importó bpy en el archivo ui_panel")
         """
 #main_panel  
 class CALCBLENDER_PT_SurfacePanel(bpy.types.Panel):
-    bl_label = "Superficies"
+    bl_label = "Herramientas de Cálculo Multivariable"
     bl_idname = "CALCBLENDER_PT_SurfacePanel"
     bl_space_type = 'VIEW_3D'
     bl_region_type = 'UI'
