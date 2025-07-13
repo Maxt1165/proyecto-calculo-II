@@ -67,14 +67,17 @@ class CALCBLENDER_PT_GradientePanel(bpy.types.Panel):
         obj = context.active_object
 
         box = layout.box()
-        box.label(text="Evaluar ∇f en punto (x₀, y₀)", icon='MESH_CONE') 
+        box.label(text="Evaluar ∇f en punto (x₀, y₀)") 
 
         row = box.row(align=True)
         row.prop(props, "punto_gradiente_x", text="x₀")
         row.prop(props, "punto_gradiente_y", text="y₀")
 
         if obj and "funcion" in obj:
-            box.operator("calcblender.visualizar_gradiente", text="Generar Gradiente")
+             # Botón para generar el vector gradiente
+            box.operator("calcblender.visualizar_gradiente", text="Mostrar ∇f", icon='CON_ROTLIKE')
+            # Botón para generar el plano tangente
+            box.operator("calcblender.plano_tangente", text="Mostrar Plano Tangente", icon='MESH_PLANE')
         else:
             box.label(text="Seleccione una superficie válida", icon='ERROR')
 
