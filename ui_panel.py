@@ -87,17 +87,44 @@ class CALCBLENDER_PT_GradientePanel(bpy.types.Panel):
         if props.gradiente_preview:
             box.separator()
             box.label(text=props.gradiente_preview, icon='INFO')
-            
+
         if props.plano_tangente_preview:
             box.separator()
             box.label(text="Plano tangente:", icon='MESH_PLANE')
             box.label(text=props.plano_tangente_preview)
 
+class CALCBLENDER_PT_IntegralPanel(bpy.types.Panel):
+    bl_label = "Integrales Dobles"
+    bl_idname = "CALCBLENDER_PT_IntegralPanel"
+    bl_parent_id = "CALCBLENDER_PT_SurfacePanel"
+    bl_space_type = 'VIEW_3D'
+    bl_region_type = 'UI'
+    bl_options = {'DEFAULT_CLOSED'}
+
+    def draw(self, context):
+        layout = self.layout
+        props = context.scene.calcblender_props
+        obj = context.active_object
+
+        box = layout.box()
+        box.label(text="Evaluar ∬ f(x,y) dxdy")
+
+        grid = box.grid_flow(row_major=True, columns=2, even_columns=True)
+        grid.prop(props, "integral_x_min", text="x₁")
+        grid.prop(props, "integral_x_max", text="x₂")
+        grid.prop(props, "integral_y_min", text="y₁")
+        grid.prop(props, "integral_y_max", text="y₂")
+
+        box.operator("calcblender.visualizar_integral", text="Calcular Integral", icon='CALC')
+
+        if props.integral_preview:
+            box.label(text=props.integral_preview, icon='INFO')
 
 
 classes = (
     CALCBLENDER_PT_SurfacePanel,
-    CALCBLENDER_PT_GradientePanel,   # ← añade el nuevo
+    CALCBLENDER_PT_GradientePanel,
+    CALCBLENDER_PT_IntegralPanel
 )
 
 def register():
