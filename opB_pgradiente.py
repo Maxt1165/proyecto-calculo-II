@@ -20,15 +20,15 @@ class CB_OT_VisualizarGradiente(bpy.types.Operator):
         funcion = props.superficie_funcion
         punto = (props.punto_gradiente_x, props.punto_gradiente_y)
 
-         # Validación: ¿la función está vacía?
+        # Validación de la función
         if not funcion:
             self.report({'ERROR'}, "Debes ingresar una función z = f(x, y)")
             return {'CANCELLED'}
         grad = logica_gradiente_calculo.calcular_gradiente(funcion, punto)
+        # Manejo de errores por si el gradiente es 0
         if grad == (0.0, 0.0):
             self.report({'ERROR'}, "No se pudo calcular el gradiente o es nulo")
             return {'CANCELLED'}
-#<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 
         # Calcular z = f(x, y)
         try:
             z = eval(funcion, {}, {'x': punto[0], 'y': punto[1]})
@@ -48,7 +48,7 @@ class CB_OT_VisualizarGradiente(bpy.types.Operator):
             direccion.normalize()
             rotacion = direccion.to_track_quat('Z', 'Y').to_euler()
             cono.rotation_euler = rotacion
-
+        # Mostrar el resultado en pantalla
         self.report({'INFO'}, f"Gradiente en ({punto[0]}, {punto[1]}) = {grad}")
         props.gradiente_preview = f"∇f({punto[0]:.2f}, {punto[1]:.2f}) = ({grad[0]:.3f}, {grad[1]:.3f})"
         return {'FINISHED'} 
