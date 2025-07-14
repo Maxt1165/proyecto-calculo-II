@@ -21,7 +21,7 @@ class CB_OT_Planotangente(bpy.types.Operator):
         funcion = props.superficie_funcion
         x0, y0 = props.punto_gradiente_x, props.punto_gradiente_y
         
-        # Validación: ¿la función está vacía?
+        # Validación de la función 
         if not funcion:
             self.report({'ERROR'}, "Debe ingresar una función z = f(x,y)")
             return {'CANCELLED'}
