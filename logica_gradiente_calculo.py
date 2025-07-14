@@ -10,7 +10,7 @@ def calcular_gradiente(expresion, punto):
     Returns:
         tuple: Vector gradiente (df/dx, df/dy)
     """
-    # 1. Crear símbolos y expresión
+   # 1. Crear símbolos y expresión
     x, y = sp.symbols('x y')
     try:
         expr = sp.sympify(expresion)
