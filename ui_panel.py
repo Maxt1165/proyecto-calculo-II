@@ -13,7 +13,7 @@ print("Se importó bpy en el archivo ui_panel")
         """
 #main_panel  
 class CALCBLENDER_PT_SurfacePanel(bpy.types.Panel):
-    bl_label = "Herramientas de Cálculo Multivariable"
+    bl_label = "Superficies"
     bl_idname = "CALCBLENDER_PT_SurfacePanel"
     bl_space_type = 'VIEW_3D'
     bl_region_type = 'UI'
@@ -40,10 +40,7 @@ class CALCBLENDER_PT_SurfacePanel(bpy.types.Panel):
         grid.prop(props, "superficie_x_max", text="X Max")
         grid.prop(props, "superficie_y_min", text="Y Min")
         grid.prop(props, "superficie_y_max", text="Y Max")
-        # NUEVO: límites visuales para Z
-        grid.prop(props, "superficie_z_min", text="Z Min")
-        grid.prop(props, "superficie_z_max", text="Z Max")
-        
+
         # Resolución con slider
         box.prop(props, "superficie_resolucion", slider=True)
         
