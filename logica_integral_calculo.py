@@ -26,9 +26,9 @@ def crear_prisma_integral(expr, x_dominio, y_dominio, resolucion_sup, resolucion
     X, Y = np.meshgrid(x, y)
     Z = f(X, Y)
 
-    bm = bmesh.new()
-    verts_sup = []
-    verts_base = []
+    bm = bmesh.new() # Aquí crea la malla
+    verts_sup = [] # Arreglo para los vértices de la superficie
+    verts_base = [] # Arreglo para los vértices de la base
 
     for j in range(resolucion_sup):
         for i in range(resolucion_sup):
@@ -98,7 +98,7 @@ def crear_prisma_integral(expr, x_dominio, y_dominio, resolucion_sup, resolucion
     generar_laterales_eje_y(x_dominio[0])  # lado x = x_min
     generar_laterales_eje_y(x_dominio[1])  # lado x = x_max
 
-    # Crear objeto
+    # Asigna el objeto creado a la malla
     mesh = bpy.data.meshes.new("Prisma_Integral")
     bm.to_mesh(mesh)
     bm.free()
