@@ -36,7 +36,7 @@ _modules = [ util_propiedades,
             logica_gradiente_calculo, opB_pgradiente, opB_ptangente, 
             logica_curvas_nivel, opB_curvas_nivel,
             logica_integral_calculo, opB_integral,
-            ui_panel]  # AQUI SE AÑADIRAN LOS MODULOS A DESARROLLAR
+            ui_panel]  # AQUI SE AÑADEN LOS MODULOS A DESARROLLAR
 
 def _reload_modules():
     for m in _modules:
