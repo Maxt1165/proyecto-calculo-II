@@ -1,6 +1,6 @@
 import sympy as sp
 import numpy as np
-import bmesh
+import bmesh # type: ignore
 import bpy
 from .logica_soporte_matematica import hacerfuncion_segura
 
