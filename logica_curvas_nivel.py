@@ -1,7 +1,7 @@
 import numpy as np
 from .logica_soporte_matematica import hacerfuncion_segura
 import bpy
-
+import mathutils
 def obtener_curvas_de_nivel(expr, x_range, y_range, resolucion, niveles):
     """ Evalúa la función z = f(x, y) y devuelve las curvas de nivel como listas de puntos (por nivel).
     Args:
